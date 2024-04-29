@@ -1,6 +1,7 @@
 import tkinter
 import mysql.connector
 from tkinter import messagebox
+from Database import Database
 
 window = tkinter.Tk()
 window.title("Login form")
@@ -8,19 +9,14 @@ window.geometry('500x500')
 window.configure(bg='#FFFFFF')
 
 frame = tkinter.Frame(bg='#FFFFFF')
-
+db = Database()
 
 def login():
     
     try:
         
-        db = mysql.connector.connect(
-            host="localhost",
-            user="zaskia",
-            password="publicpw",
-            database="cookncart"
-        )
-        my_cursor = db.cursor()
+        
+        my_cursor = db.db.cursor()
         email_id = email_entry.get()
         password = password_entry.get()
         query = "SELECT * FROM users WHERE Email = %s AND UserPassword = %s"
