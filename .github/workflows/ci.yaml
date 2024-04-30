@@ -2,7 +2,11 @@ name: CI
 
 on:
   push:
+    branches: 
+      - 'zaskia'
   pull_request:
+    branches:
+      - 'zaskia'
 
 jobs:
   run_tests:
