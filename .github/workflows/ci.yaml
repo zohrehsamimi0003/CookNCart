@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches: 
-      - 'zaskia'
+      - 'Zaskia-branch'
   pull_request:
     branches:
-      - 'zaskia'
+      - 'Zaskia-branch'
 
 jobs:
   run_tests:
