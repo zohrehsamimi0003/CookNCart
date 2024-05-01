@@ -20,12 +20,17 @@ db = Database()
 def login():
     email_id = email_entry.get()
     password = password_entry.get()
-    db.login_handler(email_id,password)
+    user = db.login_validation(email_id, password)
+    if user:
+        #Returns the user
+        print(user)
+        messagebox.showinfo(title="Successfully logged in", message="You are logged in!")
+    else:
+        messagebox.showinfo(title="Login Error", message="Invalid email or password!")
     
 def recipe_test():
     random_recipe = db.random_recipe()
     print(random_recipe)
-
 
 # Create widgets
 login_label = tkinter.Label(
