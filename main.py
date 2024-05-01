@@ -1,6 +1,7 @@
 import tkinter
 import mysql.connector
 from tkinter import messagebox
+from Database import Database
 
 window = tkinter.Tk()
 window.title("Login form")
@@ -9,32 +10,27 @@ window.configure(bg='#FFFFFF')
 
 frame = tkinter.Frame(bg='#FFFFFF')
 
+#This Must stay in main or whatever file you start on.
+# It instanstiates the database
+db = Database()
+
+#Wherever you wanto to use methods thataccess the database (here or elsewhere)
+#You use it like in the login method below.
 
 def login():
+    email_id = email_entry.get()
+    password = password_entry.get()
+    user = db.login_validation(email_id, password)
+    if user:
+        #Returns the user
+        print(user)
+        messagebox.showinfo(title="Successfully logged in", message="You are logged in!")
+    else:
+        messagebox.showinfo(title="Login Error", message="Invalid email or password!")
     
-    try:
-        
-        db = mysql.connector.connect(
-            host="localhost",
-            user="zaskia",
-            password="publicpw",
-            database="cookncart"
-        )
-        my_cursor = db.cursor()
-        email_id = email_entry.get()
-        password = password_entry.get()
-        query = "SELECT * FROM users WHERE Email = %s AND UserPassword = %s"
-        my_cursor.execute(query, (email_id, password))
-        user = my_cursor.fetchone()
-
-        if user:
-            messagebox.showinfo(title="Successfully logged in", message="You are logged in!")
-        else:
-            messagebox.showinfo(title="Login Error", message="Invalid email or password!")
-
-    except mysql.connector.Error as e:
-        messagebox.showerror(title="Database Error", message=f"Error: {e}")
-    
+def recipe_test():
+    random_recipe = db.random_recipe()
+    print(random_recipe)
 
 # Create widgets
 login_label = tkinter.Label(
@@ -50,7 +46,7 @@ password_label = tkinter.Label(
 login_button = tkinter.Button(
     frame, text="Login", bg='#B0C4DE', font=("Arial", 16), command=login)
 forgot_pw_button = tkinter.Button(
-    frame, text="Forgot Password", bg='#B0C4DE', font=("Arial", 16))
+    frame, text="Forgot Password", bg='#B0C4DE', font=("Arial", 16), command=recipe_test)
 
 # Place widgets on screen
 login_label.grid(row=0, column=0, columnspan=3, sticky="news", pady=40) 
