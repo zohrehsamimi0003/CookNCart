@@ -30,7 +30,7 @@ Meal_Preference = tkinter.Label(
 Meal_preference_entry= tkinter.Entry(
     frame,bg='#D2B4DE' , font=("Georgia", 12))
 create_account_button = tkinter.Button(
-    frame, text="Create",bg='#F5B7B1', font=("Georgia", 14), command=create_account)
+    frame, text="Create",bg='#F5B7B1', font=("Georgia", 12), command=create_account)
 
 
 
