@@ -42,7 +42,7 @@ class Database:
     #UPDATES THE PASSWORD OF AN EXISTING USER
     def update_password(self, user, new_password): #pass user object here and the new password from the entry box
         mycursor = self.db.cursor()
-        query = '''UPDATE users SET UserPassword = % WHERE Email = %;'''
+        query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
         parameters = (new_password, user.email)
         mycursor.execute(query, parameters)
         mycursor.rowcount
