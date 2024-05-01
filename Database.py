@@ -52,12 +52,10 @@ class Database:
                     LIMIT 1;'''
             
             
-            my_cursor.execute(query, (meal_time))
+            my_cursor.execute(query, (meal_time,))
             random_recipe = my_cursor.fetchone()
             return random_recipe 
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
             return False
-
-
 
