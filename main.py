@@ -1,58 +1,56 @@
-import tkinter
 import mysql.connector
 from tkinter import messagebox
-from Database import Database
+from datetime import datetime, time
 
-window = tkinter.Tk()
-window.title("Login form")
-window.geometry('500x500')
-window.configure(bg='#FFFFFF')
-
-frame = tkinter.Frame(bg='#FFFFFF')
-
-#This Must stay in main or whatever file you start on.
-# It instanstiates the database
-db = Database()
-
-#Wherever you wanto to use methods thataccess the database (here or elsewhere)
-#You use it like in the login method below.
-
-def login():
-    email_id = email_entry.get()
-    password = password_entry.get()
-    db.login_handler(email_id,password)
+class Database:
+    def __init__(self):
+        self.db = mysql.connector.connect(
+            host="localhost",
+            user="zaskia",
+            password="publicpw",
+            database="cookncart"
+        )
     
-def recipe_test():
-    random_recipe = db.random_recipe()
-    print(random_recipe)
+    #
+    def login_validation(self, email, password):
+        try:
+            my_cursor = self.db.cursor()
+            query = "SELECT * FROM users WHERE Email = %s AND UserPassword = %s"
+            my_cursor.execute(query, (email, password))
+            user = my_cursor.fetchone()
+            return user
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
 
+    def random_recipe(self): #This should return a tuple or something like it
+        current_time = datetime.now().time()
+        breakfast_end = time(10,30)
+        lunch_end = time(14,30)
 
-# Create widgets
-login_label = tkinter.Label(
-    frame, text="Login",bg='#FFFFFF', font=("Arial", 30) )
-email_label = tkinter.Label(
-    frame, text="E-Mail ID", bg='#FFFFFF', font=("Arial", 16))
-email_entry = tkinter.Entry(
-    frame, font=("Arial", 16))
-password_entry = tkinter.Entry(
-    frame, show="*", font=("Arial", 16))
-password_label = tkinter.Label(
-    frame, text="Password", bg='#FFFFFF', font=("Arial", 16))
-login_button = tkinter.Button(
-    frame, text="Login", bg='#B0C4DE', font=("Arial", 16), command=login)
-forgot_pw_button = tkinter.Button(
-    frame, text="Forgot Password", bg='#B0C4DE', font=("Arial", 16), command=recipe_test)
+        if current_time < breakfast_end:
+            meal_time = "Breakfast"
+        elif current_time > breakfast_end and current_time < lunch_end:
+            meal_time = "Lunch"
+        else:
+            meal_time = "Dinner"
 
-# Place widgets on screen
-login_label.grid(row=0, column=0, columnspan=3, sticky="news", pady=40) 
-email_label.grid(row=1, column=0)
-email_entry.grid(row=1, column=2, pady=20)
-password_label.grid(row=2, column=0)  
-password_entry.grid(row=2, column=2, pady=20)  
-login_button.grid(row=4, column=0, columnspan=2, pady=30)
-forgot_pw_button.grid(row=4, column=2, columnspan=2, pady=30)
+        try:
+            my_cursor = self.db.cursor()
+            query = '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
+                    INNER JOIN meal_times
+                    ON recipes.MealTimeId = meal_times.MealTimeId
+                    INNER JOIN diet_types
+                    ON recipes.DietType = diet_types.DietTypeId
+                    WHERE meal_times.MealTime = %s
+                    ORDER BY RAND()
+                    LIMIT 1;'''
+            
+            
+            my_cursor.execute(query, (meal_time,))
+            random_recipe = my_cursor.fetchone()
+            return random_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
 
-frame.pack()
-
-
-window.mainloop()
