@@ -1,5 +1,4 @@
-import tkinter
-import mysql.connector
+
 from tkinter import messagebox
 from Database import Database
 from datetime import datetime, time
@@ -52,7 +51,7 @@ def main():
 
     db.insert_user(username_entry, email_entry, password_entry, diet_type)
 
-    
+
     user = User(username_entry, email_entry, password_entry, diet_type)
 
     #db.insert_user("test_user", "test_user@gmail.com", "testpw", "Vegan")'''
