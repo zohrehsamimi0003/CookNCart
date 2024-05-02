@@ -14,7 +14,8 @@ class Database:
     def login_validation(self, email, password):
         try:
             my_cursor = self.db.cursor()
-            query = "SELECT * FROM users WHERE Email = %s AND UserPassword = %s"
+            query = '''SELECT Username, UserPassword, Email, DietType FROM users JOIN diet_types 
+                    ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s AND UserPassword = %s'''
             my_cursor.execute(query, (email, password))
             user = my_cursor.fetchone()
             return user  # Returns the user object if found, otherwise None
@@ -23,14 +24,14 @@ class Database:
             return False  # Return False only if there's an error
 
     #INSERTS A USER BEING CREATED INTO THE DATABASE    
-    def insert_user(self, username_entry, email_entry, password_entry, diet_type): 
+    def insert_user(self, username_entry, email_entry, password_entry, diet_type_entry): 
         try:
             mycursor = self.db.cursor()
             query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = 'Vegetarian';
                     INSERT INTO users (Username, UserPassword, Email, DietType)
                     VALUES (%s, %s, %s, %s)'''
             
-            parameters = (username_entry, password_entry, email_entry, diet_type)
+            parameters = (username_entry, password_entry, email_entry, diet_type_entry)
             mycursor.execute(query, parameters)
             return mycursor.rowcount #will return 1 if properly inserted, maybe use that to check and instantiate user object?
     

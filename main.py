@@ -3,6 +3,7 @@ import mysql.connector
 from tkinter import messagebox
 from Database import Database
 from datetime import datetime, time
+from User import User
 #This Must stay in main or whatever file you start on.
 # It instanstiates the database
 db = Database()
@@ -33,11 +34,39 @@ def recipe_test():
     time_of_day_recipe = db.time_of_day_recipe(meal_time)
     print(time_of_day_recipe)
 
+    
+
 def main():
-    email_entry = input("email: ")
+
+        #login:
+    '''email_entry = input("email: ")
     password_entry = input("password: ")
 
-    login(email_entry, password_entry)
+    login(email_entry, password_entry)'''
+
+    #create user:
+    username_entry = input("username: ")
+    email_entry = input("email: ")
+    password_entry = input("password: ")
+    diet_type = input("diet type: ")
+
+    db.insert_user(username_entry, email_entry, password_entry, diet_type)
+
+    
+    user = User(username_entry, email_entry, password_entry, diet_type)
+
+    #db.insert_user("test_user", "test_user@gmail.com", "testpw", "Vegan")'''
+
+    #delete user:
+    '''email_entry = input("email: ")
+    db.delete_user(email_entry)'''
+    #db.delete_user(test_user
+
+    #update password:
+    '''email_entry = input("email: ")
+    password_entry = input("password: ")
+    db.update_password(email_entry, password_entry)'''
+
 
 if __name__ == "__main__":
     main()
