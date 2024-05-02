@@ -1,15 +1,18 @@
 import tkinter
-import mysql.connector
-from tkinter import messagebox
-import main_window
+# import mysql.connector
+# from tkinter import messagebox
+# import main_window
 
 class AccountCreation:
 # root = tkinter.Tk()
-# Back_ground = main_window.MainWindow(root)
+    # Back_ground = main_window.MainWindow(root)
 
-    def __init__(self,root):
-        self.root = root
-        self.frame = tkinter.Frame(root,bg='#F9EBEA')
+    def __init__(self,main_win):
+        self.main_win = main_win
+        self.create_widgets()
+    
+    def create_widgets(self):    
+        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA')
 
         CookNCart = tkinter.Button(
             self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
