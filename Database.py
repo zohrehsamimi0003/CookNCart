@@ -1,4 +1,5 @@
 import mysql.connector
+from User import User
 
 class Database:
     def __init__(self):
@@ -23,43 +24,55 @@ class Database:
 
     #INSERTS A USER BEING CREATED INTO THE DATABASE    
     def insert_user(self, username_entry, email_entry, password_entry, diet_type): 
-        mycursor = self.db.cursor()
-        query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = 'Vegetarian';
-                INSERT INTO users (Username, UserPassword, Email, DietType)
-                VALUES (%s, %s, %s, %s)'''
-        
-        parameters = (username_entry, password_entry, email_entry, diet_type)
-        mycursor.execute(query, parameters)
-
-        return mycursor.rowcount #will return 1 if properly inserted, maybe use that to check and instantiate user object?
+        try:
+            mycursor = self.db.cursor()
+            query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = 'Vegetarian';
+                    INSERT INTO users (Username, UserPassword, Email, DietType)
+                    VALUES (%s, %s, %s, %s)'''
+            
+            parameters = (username_entry, password_entry, email_entry, diet_type)
+            mycursor.execute(query, parameters)
+            return mycursor.rowcount #will return 1 if properly inserted, maybe use that to check and instantiate user object?
+    
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
     #DELETES AN EXISTING USER
     def delete_user(self, user):
-        mycursor = self.db.cursor()
-        query = '''DELETE FROM users WHERE Email = %s;'''
-        mycursor.execute(query, (user.email,))
+        try:
+            mycursor = self.db.cursor()
+            query = '''DELETE FROM users WHERE Email = %s;'''
+            mycursor.execute(query, (user.email,))
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
     #UPDATES THE PASSWORD OF AN EXISTING USER
     def update_password(self, user, new_password): #pass user object here and the new password from the entry box
-        mycursor = self.db.cursor()
-        query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
-        parameters = (new_password, user.email)
-        mycursor.execute(query, parameters)
-        mycursor.rowcount
+        try:
+            mycursor = self.db.cursor()
+            query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
+            parameters = (new_password, user.email)
+            mycursor.execute(query, parameters)
+            mycursor.rowcount
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
     #UPDATES THE DIET TYPE OF AN EXISTING USER
     def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
-        mycursor = self.db.cursor()
-        query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
-        UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;'''
-        parameters = (new_diet_type, user.email)
-        mycursor.execute(query, parameters)
-        mycursor.rowcount
+        try:
+            mycursor = self.db.cursor()
+            query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
+            UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;'''
+            parameters = (new_diet_type, user.email)
+            mycursor.execute(query, parameters)
+            mycursor.rowcount
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
 
 
-    #SELECTS A RANDOM RECIPE BASED ON LUNCH TYPE (USED FOR TIME OF DAY RECIPE)
-    def get_random_recipe(self, meal_time): 
+    #SELECTS 1 OR MORE RANDOM RECIPE BASED ON LUNCH TYPE (USED FOR TIME OF DAY RECIPE)
+    def get_random_recipes(self, meal_time, number_of_recipes): 
         #implement a function in your code that decides if 
         #its time for a random lunch/breankfast/dinner recipe
         #pass strings lunch or dinner or breakfast (see main.py on my branch for logic i tested with)
@@ -73,9 +86,9 @@ class Database:
                     ON recipes.DietType = diet_types.DietTypeId
                     WHERE meal_times.MealTime = %s
                     ORDER BY RAND()
-                    LIMIT 1;'''            
+                    LIMIT %;'''            
             
-            my_cursor.execute(query, (meal_time,))
+            my_cursor.execute(query, (meal_time, number_of_recipes))
             random_recipe = my_cursor.fetchone()
             return random_recipe 
         except mysql.connector.Error as e:
