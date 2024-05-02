@@ -11,7 +11,8 @@ def main():
     
     s = start_app.StartApp(root)
     s.create_widgets()
-    a = account_creation.AccountCreation(root)
+    root1 =tkinter.Tk()
+    a = account_creation.AccountCreation(root1)
     # my_screen_manager = screen_manager.ScreenManager()
     
     
