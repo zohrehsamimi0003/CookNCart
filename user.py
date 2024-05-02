@@ -1,5 +1,5 @@
 import database
-import screen01
+import start_app
 import tkinter as tk
 
 class User:
@@ -8,9 +8,8 @@ class User:
         self.email_id = user1_tuple[2]
         self.password = user1_tuple[3]
         self.diet_type =user1_tuple[4]
-        
-        
-        
+
+
     #when user clicked create_account then a_c_screen will appear)    
     # def create_account(self, account_creation_screen):
     #     return account_creation_screen

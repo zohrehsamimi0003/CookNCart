@@ -1,25 +1,32 @@
 import tkinter
 from tkinter import messagebox
 import user
-
 import database
+# import account_creation
+import screen_manager
 
-class Screen01:
+class StartApp:
     my_db = database.Database()
     
-    def __init__(self, root):
+    def __init__(self,root):
         self.root = root
-        self.frame1 = tkinter.Frame(root, width=1000, height=500,bg='#F9EBEA')
+        screen_manager.ScreenManager(root)
+        self.frame1 = tkinter.Frame(self.root, width=1000, height=500,bg='#F9EBEA')
         self.frame1.pack(side='top')
-        self.frame2 = tkinter.Frame(root, width=1000, height=500,bg='#F9EBEA')
+        self.frame2 = tkinter.Frame(self.root, width=1000, height=500,bg='#F9EBEA')
         self.frame2.pack(side='top')
-        self.frame3 = tkinter.Frame(root, width=1000, height=1000,bg='#F9EBEA')
+        self.frame3 = tkinter.Frame(self.root, width=1000, height=1000,bg='#F9EBEA')
         self.frame3.pack(side='left')
-        self.frame4 = tkinter.Frame(root, width=1000, height=500,bg='#F9EBEA')
+        self.frame4 = tkinter.Frame(self.root, width=1000, height=500,bg='#F9EBEA')
         self.frame4.pack(side='top')
         
+        # self.screen_manager = screen_manager
+        # self.main_w = main_w
         
-    def frame1_lable(self):    
+        
+    def create_widgets(self):
+        # Create frames    
+        
         # Create widgets
         login_label = tkinter.Label(
             self.frame1, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) )
@@ -37,7 +44,9 @@ class Screen01:
         forgot_pw_button = tkinter.Button(
             self.frame3, text="Forgot Password", bg='#F5B7B1', font=("Georgia", 12))
         create_account_button = tkinter.Button(
-            self.frame4, text="Create Account",bg='#F5B7B1', font=("Georgia", 11))#, command = self.create_account)
+            self.frame4, text="Create Account",bg='#F5B7B1', 
+                               font=("Georgia", 11),
+                                command = self.root.destroy)
 
 
         # Place widgets on screen
@@ -79,14 +88,31 @@ class Screen01:
             return True
                     
     def handle_login(self, user1_tuple):
+        """Handles the login success. Creat user object"""
         if user1_tuple is None:
             tkinter.messagebox.showerror("Error", "Invalid email or password")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user.User(user1_tuple)
                           
-    def create_account_clicked(self):
-       # def login_successful(self):
+                          
+    # def clear_widgets(self):
+    #     # Destroy or remove all widgets of the current screen
+    #     for widget in self.root.winfo_children():
+    #         widget.destroy()
+                                  
+    # def create_account_clicked(self):
+    #     self.root.destroy
+        # account_creation.AccountCreation()
+    #     # sm = screen_manager.ScreenManager
+        # screen_manager.ScreenManager.clear_widgets()
+        # z = account_creation.AccountCreation(self.root)
+        # screen_manager.ScreenManager.switch_to_new_screen(z)
+        
+        
+    # def login_successful(self):
         
     #     # self.open_welcom_screen()
     #         # self.destroy()
+    # def display_account_creation_screen(self):
+    #     account_creation.account_creation_screen()
