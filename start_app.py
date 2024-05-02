@@ -92,6 +92,8 @@ class StartApp:
         """Handles the login success. Creat user object"""
         if user1_tuple is None:
             tkinter.messagebox.showerror("Error", "Invalid email or password")
+        elif user1_tuple is False:
+            tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user.User(user1_tuple)
