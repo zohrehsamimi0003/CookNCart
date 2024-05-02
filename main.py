@@ -66,14 +66,20 @@
 
 # window.mainloop()
 import tkinter as tk
-import mygui
+
+import screen01
 import mainwindow
 
 def main():
     root = tk.Tk()
-    w = mainwindow.MainWindow(root)
-    g = mygui.MyGUI(root)
-    g.frame1_button()
+    main_win= mainwindow.MainWindow(root)
+    sc1 = screen01.Screen01(root)
+    sc1.frame1_lable()
+    
+    
+    
+    # g = mygui.MyGUI(root)
+    # g.frame1_button()
     
     root.mainloop()
 
