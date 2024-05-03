@@ -60,7 +60,6 @@ class Database:
             return rowcount #you get 1 if it inserted it successfully 
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
-            return 0
             
 
         
@@ -78,7 +77,6 @@ class Database:
             return rowcount
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
-            return 0
 
     #UPDATES THE PASSWORD OF AN EXISTING USER
     def update_password(self, user, new_password): #pass user object here and the new password from the entry box
@@ -94,7 +92,6 @@ class Database:
             return rowcount
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
-            return 0
 
     #UPDATES THE DIET TYPE OF AN EXISTING USER
     def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
@@ -115,7 +112,6 @@ class Database:
             return rowcount
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
-            return 0
 
 
 
