@@ -2,6 +2,7 @@ import mysql.connector
 import tkinter
 import user
 import database
+import welcome_screen
 # import mysql.connector
 # from tkinter import messagebox
 # import main_window
@@ -69,11 +70,12 @@ class AccountCreation:
         meal = self.Meal_preference_entry.get()
         user1 = self.my_db.login_validation(mail, pwd) #duplicacy check based on email
         if user1 is None:
-            self.my_db.insert_user(name, mail, pwd, meal)
+            number = self.my_db.insert_user(name, mail, pwd, meal)
             tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
             # user1_tuple = self.db.login_validation(mail, pwd)
             # user.User(user1_tuple)
-            # self.clear_and_add_widgets
+            if number == 1:
+                self.clear_and_add_widgets()
         elif user1 is False:
             tkinter.messagebox.showerror("Error", "Database Connection Error.")
         else:                
@@ -86,4 +88,6 @@ class AccountCreation:
         # Clear widgets from main window
         for widget in self.frame.winfo_children():
             widget.destroy()
-        # welcome_screen.WelcomeScreen(self.main_win)
+        print('n')    
+        welcome_screen.WelcomeScreen(self.main_win)
+        print('m')

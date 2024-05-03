@@ -60,17 +60,6 @@ class StartApp:
         forgot_pw_button.grid(row=4, column=1, columnspan=2, pady=30)
         create_account_button.grid(row=0,column=2,padx=10,pady=10, sticky="ne")
         
-    # def login_button_clicked(self):
-    #     """Functionality for log in button"""
-    #     mail = self.email_entry.get()
-    #     pwd = self.password_entry.get()
-    #     user1 = self.my_db.login_validation(mail, pwd)        
-    #     if user1 is None:
-    #         tkinter.messagebox.showerror("Error", "Invalid email or password")
-    #         return False
-    #     else:
-    #         tkinter.messagebox.showinfo("Success", "Login successful!")
-    #         return True
         
         
     def login_button_clicked(self):
@@ -80,14 +69,7 @@ class StartApp:
         user1 = self.my_db.login_validation(mail, pwd)
         return user1
     
-            
-        if user1 is None:
-            tkinter.messagebox.showerror("Error", "Invalid email or password")
-            return False
-        else:
-            tkinter.messagebox.showinfo("Success", "Login successful!")
-            return True
-                    
+
     def handle_login(self, user1_tuple):
         """Handles the login success. Creat user object"""
         if user1_tuple is None:
@@ -98,28 +80,6 @@ class StartApp:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user.User(user1_tuple)
                           
-                          
-    # def clear_widgets(self):
-    #     # Destroy or remove all widgets of the current screen
-    #     for widget in self.root.winfo_children():
-    #         widget.destroy()
-                                  
-    # def create_account_clicked(self):
-    #     self.root.destroy
-        # account_creation.AccountCreation()
-    #     # sm = screen_manager.ScreenManager
-        # screen_manager.ScreenManager.clear_widgets()
-        # z = account_creation.AccountCreation(self.root)
-        # screen_manager.ScreenManager.switch_to_new_screen(z)
-        
-        
-    # def login_successful(self):
-        
-    #     # self.open_welcom_screen()
-    #         # self.destroy()
-    # def display_account_creation_screen(self):
-    #     account_creation.account_creation_screen()
-    
     def clear_and_add_widgets(self):
         # Clear widgets from main window
         for widget in self.frame1.winfo_children():
@@ -131,4 +91,3 @@ class StartApp:
         for widget in self.frame4.winfo_children():
             widget.destroy()
         account_creation.AccountCreation(self.main_win)
-        # additional_widget_creator.create_additional_widgets()
