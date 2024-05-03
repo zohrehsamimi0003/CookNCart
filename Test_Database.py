@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 from Database import Database  # Import your Database class
 
-class TestDatabase(unittest.TestCase):
+class Test_Database(unittest.TestCase):
 
     @patch('Database.mysql.connector.connect')
     def test_login_validation_valid(self, mock_connect):
