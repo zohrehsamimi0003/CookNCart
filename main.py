@@ -49,12 +49,13 @@ def main():
     password_entry = input("password: ")
     diet_type = input("diet type: ")
 
-    db.insert_user(username_entry, email_entry, password_entry, diet_type)
-
+    rows = db.insert_user(username_entry, email_entry, password_entry, diet_type)
+    print(rows)
 
     user = User(username_entry, email_entry, password_entry, diet_type)
 
-    #db.insert_user("test_user", "test_user@gmail.com", "testpw", "Vegan")'''
+    #db.insert_user("test_user", "test_user@gmail.com", "testpw", "Vegan")
+    #print(rowcount)
 
     #delete user:
     '''email_entry = input("email: ")
