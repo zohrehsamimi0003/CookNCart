@@ -3,7 +3,7 @@ from tkinter import messagebox
 import user
 import database
 import account_creation
-# import screen_manager
+
 
 class StartApp:
     my_db = database.Database()
@@ -11,11 +11,6 @@ class StartApp:
     def __init__(self,main_win):
         self.main_win = main_win
         self.create_widgets()
-        # screen_manager.ScreenManager(root)
-        
-        # self.screen_manager = screen_manager
-        # self.main_w = main_w
-        
         
     def create_widgets(self):
         # Create frames    
@@ -78,10 +73,11 @@ class StartApp:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
-            user.User(user1_tuple)
-                          
+            user_details = user.User(user1_tuple) 
+
+    
     def clear_and_add_widgets(self):
-        # Clear widgets from main window
+        """Clear widgets from main window and switch screen."""
         for widget in self.frame1.winfo_children():
             widget.destroy()
         for widget in self.frame2.winfo_children():

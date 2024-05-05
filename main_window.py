@@ -2,6 +2,7 @@ import tkinter
 class MainWindow:
     """Creates the main window for all screens that appear
     throughout the application"""
+    
     def __init__(self,root):
         # root = tkinter.Tk()
         

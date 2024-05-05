@@ -1,8 +1,10 @@
-import mysql.connector
+
 import tkinter
 import user
 import database
 import welcome_screen
+import start_app
+
 # import mysql.connector
 # from tkinter import messagebox
 # import main_window
@@ -20,7 +22,7 @@ class AccountCreation:
         self.frame = tkinter.Frame(self.main_win.root,width=1000, height=1000, bg='#F9EBEA')
 
         CookNCart = tkinter.Button(
-            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
+            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid', command = self.cook_n_cart_button)
         name_label = tkinter.Label(
             self.frame, text="Name                 ", bg='#AED6F1', font=("Georgia", 12))
         self.name_entry = tkinter.Entry(
@@ -68,13 +70,14 @@ class AccountCreation:
         mail = self.Email_entry.get()
         pwd = self.Password_entry.get()
         meal = self.Meal_preference_entry.get()
-        user1 = self.my_db.login_validation(mail, pwd) #duplicacy check based on email
+        user1 = self.my_db.login_validation(mail, pwd) #duplicacy check based on email. currently we are doing
+        #manually. zaskia needs to fix her query. And, then method wiil be fixed.
         if user1 is None:
-            number = self.my_db.insert_user(name, mail, pwd, meal)
+            switch = self.my_db.insert_user(name, mail, pwd, meal)
             tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
             # user1_tuple = self.db.login_validation(mail, pwd)
             # user.User(user1_tuple)
-            if number == 1:
+            if switch == 1:
                 self.clear_and_add_widgets()
         elif user1 is False:
             tkinter.messagebox.showerror("Error", "Database Connection Error.")
@@ -82,12 +85,15 @@ class AccountCreation:
             tkinter.messagebox.showerror("Error","User already exist.")
 
     
-                     
-   
     def clear_and_add_widgets(self):
         # Clear widgets from main window
         for widget in self.frame.winfo_children():
             widget.destroy()
-        print('n')    
         welcome_screen.WelcomeScreen(self.main_win)
-        print('m')
+        
+    def cook_n_cart_button(self):
+        # Clear widgets from main window
+        for widget in self.frame.winfo_children():
+            widget.destroy() 
+        self.frame.destroy()    
+        start_app.StartApplication(self.main_win)

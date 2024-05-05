@@ -1,20 +1,17 @@
 import tkinter
+# import database
 import account_creation
 import start_app
 import main_window
-import screen_manager
+# import screen_manager
 
 def main():
-    # s = tkinter.Tk()
+    
     root = tkinter.Tk()
-    m = main_window.MainWindow(root)
+    cnc_win = main_window.MainWindow(root)
     
-    s = start_app.StartApp(m)
+    start  = start_app.StartApp(cnc_win)
     
-    # s.create_widgets()
-    # root1 =tkinter.Tk()
-    # a = account_creation.AccountCreation(m)
-    # # my_screen_manager = screen_manager.ScreenManager()
     
     
     
