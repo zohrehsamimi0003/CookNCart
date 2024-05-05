@@ -10,7 +10,11 @@ class User:
         self.password = user1_tuple[3]
         self.diet_type =user1_tuple[4]
     
-    
+    def update_user_data(self, new_name, new_password, new_diet_type):
+        self.name = new_name
+        self.password = new_password
+        self.diet_type = new_diet_type
+        
 
     #when user clicked create_account then a_c_screen will appear)    
     # def create_account(self, account_creation_screen):

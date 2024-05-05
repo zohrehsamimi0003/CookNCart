@@ -19,6 +19,5 @@ def profile_button_clicked(self, created_user_obj):
     display_profile.DisplayProfile(self.main_win, created_user_obj)
               
 def cook_n_cart_clicked(self, created_user_obj):
+    self.clear.widgets()
     welcome_screen.WelcomeScreen(self.main_win, created_user_obj)
-    print(created_user_obj.name)
-                
