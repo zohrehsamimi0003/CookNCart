@@ -42,7 +42,7 @@ class StartApp:
         create_account_button = tkinter.Button(
             self.frame4, text="Create Account",bg='#F5B7B1', 
                                font=("Georgia", 11),
-                                command = self.clear_and_add_widgets)
+                                command = self.create_button_clicked)
 
 
         # Place widgets on screen
@@ -73,9 +73,9 @@ class StartApp:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
-            user_obj = user.User(user1_tuple)
+            create_user_obj = user.User(user1_tuple)
             self.clear_and_add_widgets()
-            self.switch_welcome_screen(user_obj)           
+            welcome_screen.WelcomeScreen(self.main_win, create_user_obj)             
     
     def clear_and_add_widgets(self):
         """Clear widgets from main window and switch screen."""
@@ -88,9 +88,8 @@ class StartApp:
         for widget in self.frame4.winfo_children():
             widget.destroy()
             
-    def switch_welcome_screen(self):
-        welcome_screen.WelcomeScreen(self.main_win, user_obj)   
         
-    def switch_account_creation_screen(self):         
+    def create_button_clicked(self):
+        self.clear_and_add_widgets()         
         account_creation.AccountCreation(self.main_win)
         

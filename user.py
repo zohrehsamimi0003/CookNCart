@@ -1,6 +1,7 @@
-import database
-import start_app
-import tkinter as tk
+# import database
+# import start_app
+# import tkinter as tk
+import main_window
 
 class User:
     def __init__(self, user1_tuple):        
@@ -8,7 +9,8 @@ class User:
         self.email_id = user1_tuple[2]
         self.password = user1_tuple[3]
         self.diet_type =user1_tuple[4]
-
+    
+    
 
     #when user clicked create_account then a_c_screen will appear)    
     # def create_account(self, account_creation_screen):

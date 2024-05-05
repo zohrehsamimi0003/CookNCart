@@ -75,12 +75,18 @@ class AccountCreation:
         
     def handle_user_creation(self, user1):
         if user1 is None:
+            name = self.name_entry.get()
+            mail = self.Email_entry
+            pwd = self.Password_entry
+            meal = self.Password_entry
             rowcount = self.my_db.insert_user(name, mail, pwd, meal)
-            # user1_tuple = self.db.login_validation(mail, pwd)
-            # user.User(user1_tuple)
             if rowcount == 1:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
+                user1_tuple = self.login_validation (mail, pwd )
+                create_user_obj = user.User(user1_tuple)
                 self.clear_and_add_widgets()
+                welcome_screen.WelcomeScreen(self.main_win, create_user_obj)             
+    
             else:
                 tkinter.messagebox.showerror("Error", "Failed to create account.")    
         elif user1 is False:
@@ -93,11 +99,8 @@ class AccountCreation:
         # Clear widgets from main window
         for widget in self.frame.winfo_children():
             widget.destroy()
-        welcome_screen.WelcomeScreen(self.main_win)
         
     def cook_n_cart_button(self):
         # Clear widgets from main window
-        for widget in self.frame.winfo_children():
-            widget.destroy() 
-        self.frame.destroy()    
+        self.clear_and_add_widgets()
         start_app.StartApplication(self.main_win)

@@ -3,7 +3,7 @@ import database
 
 class Table(tk.Frame):
     my_db = database.Database()
-    self.Breakfast = Breakfast
+    
     def __init__(self, parent, rows=7, columns=4):
         tk.Frame.__init__(self, parent)
         
@@ -38,8 +38,8 @@ class Table(tk.Frame):
         
     def update_table(self):
         # Fetch data from the database
-        data = self.my_db.get_random_recipes(Breakfast, 7)
-        data = self.database.fetch_table_data()  # Implement this method in your Database class
+        data = self.my_db.meal_planner_recipes()
+         # Implemented this method in Zaskia Database class
 
         # Update table cells with fetched data
         for i, row_data in enumerate(data):
