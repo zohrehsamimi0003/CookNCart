@@ -7,8 +7,9 @@ import meal_planner
 class WelcomeScreen:
     my_db = database.Database()
     
-    def __init__(self,main_win):
+    def __init__(self,main_win, user_obj):
         self.main_win = main_win
+        self.user_obj = user_obj
         self.create_widgets()
 
 
@@ -73,6 +74,11 @@ class WelcomeScreen:
         
     def switch_meal_planner_screen(self):
         meal_planner.MealPlanner(self.main_win)
+        
+        
+    def display_profile(self):
+        self.user_obj.name
+        self.user.obj.    
   
         
     # def S

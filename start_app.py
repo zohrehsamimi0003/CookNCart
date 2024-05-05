@@ -3,7 +3,7 @@ from tkinter import messagebox
 import user
 import database
 import account_creation
-
+import welcome_screen
 
 class StartApp:
     my_db = database.Database()
@@ -61,8 +61,8 @@ class StartApp:
         """Functionality for log in button"""
         mail = self.email_entry.get()
         pwd = self.password_entry.get()
-        user1 = self.my_db.login_validation(mail, pwd)
-        return user1
+        user1_tuple = self.my_db.login_validation(mail, pwd)
+        return user1_tuple
     
 
     def handle_login(self, user1_tuple):
@@ -73,8 +73,9 @@ class StartApp:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
-            user_details = user.User(user1_tuple) 
-
+            user_obj = user.User(user1_tuple)
+            self.clear_and_add_widgets()
+            self.switch_welcome_screen(user_obj)           
     
     def clear_and_add_widgets(self):
         """Clear widgets from main window and switch screen."""
@@ -86,4 +87,10 @@ class StartApp:
             widget.destroy()
         for widget in self.frame4.winfo_children():
             widget.destroy()
+            
+    def switch_welcome_screen(self):
+        welcome_screen.WelcomeScreen(self.main_win, user_obj)   
+        
+    def switch_account_creation_screen(self):         
         account_creation.AccountCreation(self.main_win)
+        

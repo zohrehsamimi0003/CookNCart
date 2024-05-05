@@ -232,6 +232,24 @@ class Database:
             print(f"Database Error: {e}")
             return False
 
+def meal_planner_recipes(self): 
+        #Provides 7 receipes each for breakfast, lunch & dinner
+        #that can be popuated in meal_planner table.
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
+                    INNER JOIN meal_times ON recipes.MealTimeId = meal_times.MealTimeId
+                    INNER JOIN diet_types ON recipes.DietType = diet_types.DietTypeId
+                    WHERE meal_times.MealTime IN ('Breakfast', 'Lunch', 'Dinner')
+                    ORDER BY MealTime, RAND();
+''            
+            
+            my_cursor.execute(query)
+            list_of_recipe  = my_cursor.fetchone()
+            return list_of_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
 
     
     

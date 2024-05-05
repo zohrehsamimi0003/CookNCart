@@ -41,7 +41,7 @@ class AccountCreation:
             self.frame,bg='#D2B4DE' , font=("Georgia", 12))
         create_account_button = tkinter.Button(
             self.frame, text="Create",bg='#F5B7B1', font=("Georgia", 12), 
-                              command = self.create_button_clicked)
+                              command = lambda: self.handle_user_creation(self.create_button_clicked()))
 
 
 
@@ -70,15 +70,19 @@ class AccountCreation:
         mail = self.Email_entry.get()
         pwd = self.Password_entry.get()
         meal = self.Meal_preference_entry.get()
-        user1 = self.my_db.login_validation(mail, pwd) #duplicacy check based on email. currently we are doing
-        #manually. zaskia needs to fix her query. And, then method wiil be fixed.
+        user1 = self.my_db.check_if_user_exists(mail) #duplicacy check based on email. currently we are doing
+        return user1
+        
+    def handle_user_creation(self, user1):
         if user1 is None:
-            switch = self.my_db.insert_user(name, mail, pwd, meal)
-            tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
+            rowcount = self.my_db.insert_user(name, mail, pwd, meal)
             # user1_tuple = self.db.login_validation(mail, pwd)
             # user.User(user1_tuple)
-            if switch == 1:
+            if rowcount == 1:
+                tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
                 self.clear_and_add_widgets()
+            else:
+                tkinter.messagebox.showerror("Error", "Failed to create account.")    
         elif user1 is False:
             tkinter.messagebox.showerror("Error", "Database Connection Error.")
         else:                

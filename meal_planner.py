@@ -1,11 +1,10 @@
 import tkinter
-import mysql.connector
 from tkinter import messagebox
-from Main_window import Main_window
-from Meal_planner_table import Table
+import main_window
+from meal_planner_table import Table
 
 root = tkinter.Tk()
-Back_ground = Main_window(root)
+Back_ground = main_window.MainWindow(root)
 
 frame = tkinter.Frame(root,bg='#F9EBEA')
 
