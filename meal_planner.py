@@ -50,5 +50,5 @@ class MealPlanner:
     #     self.clear_widgets()
     #     display_profile.DisplayProfile(self.main_win, self.created_user_obj)
 
-    def send():
+    def send(): #ZASKIA HANDLE THIS
         pass

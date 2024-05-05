@@ -90,6 +90,7 @@ class StartApp:
             
         
     def create_button_clicked(self):
+        """Clear widgets and switch screen."""
         self.clear_and_add_widgets()         
         account_creation.AccountCreation(self.main_win)
         

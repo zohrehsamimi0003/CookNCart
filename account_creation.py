@@ -1,18 +1,12 @@
-
 import tkinter
 import user
 import database
 import welcome_screen
 import start_app
-
-# import mysql.connector
-# from tkinter import messagebox
-# import main_window
+import cook_module
 
 class AccountCreation:
     my_db = database.Database()
-# root = tkinter.Tk()
-    # Back_ground = main_window.MainWindow(root)
 
     def __init__(self,main_win):
         self.main_win = main_win
@@ -61,8 +55,6 @@ class AccountCreation:
         self.frame.columnconfigure(1, weight=1)
         self.frame.pack(fill=tkinter.BOTH, expand=True, side = 'top')
         
-   
-        
         
     def create_button_clicked(self):
         """Check for duplicate user based on email."""
@@ -74,6 +66,8 @@ class AccountCreation:
         return user1
         
     def handle_user_creation(self, user1):
+        """Handles user creation, creation of user object
+           and take the user to welcom screen."""
         if user1 is None:
             name = self.name_entry.get()
             mail = self.Email_entry
@@ -84,7 +78,7 @@ class AccountCreation:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
                 user1_tuple = self.login_validation (mail, pwd )
                 create_user_obj = user.User(user1_tuple)
-                self.clear_and_add_widgets()
+                cook_module.clear_widgets()
                 welcome_screen.WelcomeScreen(self.main_win, create_user_obj)             
     
             else:
@@ -95,12 +89,7 @@ class AccountCreation:
             tkinter.messagebox.showerror("Error","User already exist.")
 
     
-    def clear_and_add_widgets(self):
-        # Clear widgets from main window
-        for widget in self.frame.winfo_children():
-            widget.destroy()
-        
     def cook_n_cart_button(self):
-        # Clear widgets from main window
-        self.clear_and_add_widgets()
+        """Clear widgets from main window & switches screen"""
+        cook_module.clear_widgets()
         start_app.StartApplication(self.main_win)

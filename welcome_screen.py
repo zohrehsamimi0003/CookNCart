@@ -1,10 +1,7 @@
 
 import tkinter
-import user
 import database
 import meal_planner
-import display_profile
-import meal_planner_table
 import timed_recipe
 import search_recipe
 import cook_module
@@ -49,7 +46,8 @@ class WelcomeScreen:
     
     def timed_recipe_button_clicked(self):
         cook_module.clear_widgets()
-        
+        #ZASKIA FIX THIS
+        #something is missing here like fetching recipe from database based on time.
         timed_recipe.TimedRecipe(self.main_win, self.created_user_obj)       
     
     def search_recipe_button_clicked(self):    

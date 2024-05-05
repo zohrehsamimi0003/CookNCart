@@ -1,7 +1,5 @@
 import tkinter
-import mysql.connector
 from tkinter import messagebox
-import main_window
 import database
 import cook_module
 
