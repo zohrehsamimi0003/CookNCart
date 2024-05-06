@@ -6,10 +6,10 @@ import start_app
 import cook_module
 
 class AccountCreation:
-    my_db = database.Database()
 
-    def __init__(self,main_win):
+    def __init__(self,main_win, my_db):
         self.main_win = main_win
+        self.my_db = my_db
         self.create_widgets()
     
     def create_widgets(self):    
@@ -92,4 +92,4 @@ class AccountCreation:
     def cook_n_cart_button(self):
         """Clear widgets from main window & switches screen"""
         cook_module.clear_widgets()
-        start_app.StartApplication(self.main_win)
+        start_app.StartApplication(self.main_win, self.my_db)

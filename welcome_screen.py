@@ -7,10 +7,10 @@ import search_recipe
 import cook_module
 
 class WelcomeScreen:
-    my_db = database.Database()
     
-    def __init__(self, main_win, created_user_obj):
+    def __init__(self, main_win, my_db,  created_user_obj):
         self.main_win = main_win
+        self.my_db = my_db
         self.created_user_obj = created_user_obj
         self.create_widgets()
 
@@ -48,13 +48,13 @@ class WelcomeScreen:
         cook_module.clear_widgets()
         #ZASKIA FIX THIS
         #something is missing here like fetching recipe from database based on time.
-        timed_recipe.TimedRecipe(self.main_win, self.created_user_obj)       
+        timed_recipe.TimedRecipe(self.main_win, self.my_db, self.created_user_obj)       
     
     def search_recipe_button_clicked(self):    
         cook_module.clear_widgets()
-        search_recipe.SearchRecipe(self.main_win, self.created_user_obj)
+        search_recipe.SearchRecipe(self.main_win, self.my_db,self.created_user_obj)
 
-    
+#Used for testing . ZASKIA you can delete it.    
         
     # def clear_widgets(self):
     #     """Clear widgets from main window and switch screen."""

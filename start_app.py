@@ -6,10 +6,10 @@ import account_creation
 import welcome_screen
 
 class StartApp:
-    my_db = database.Database()
     
-    def __init__(self,main_win):
+    def __init__(self,main_win, my_db):
         self.main_win = main_win
+        self.my_db = my_db
         self.create_widgets()
         
     def create_widgets(self):

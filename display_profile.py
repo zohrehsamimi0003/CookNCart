@@ -4,10 +4,11 @@ import database
 import cook_module
 
 class DisplyProfile:
-    my_db = database.Database()    
-    def __init__(self, main_win, created_user_obj):
+    
+    def __init__(self, main_win,my_db, created_user_obj):
         self.main_win = main_win
         self.created_user_obj = created_user_obj
+        self.my_db = my_db
         self.create_widgets()
     
     def create_widgets(self):    

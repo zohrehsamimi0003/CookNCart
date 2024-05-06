@@ -7,6 +7,7 @@ class Table(tk.Frame):
     def __init__(self, parent, rows=7, columns=4):
         tk.Frame.__init__(self, parent)
         
+        
 
         # Column headings
         headings = ["", "Breakfast", "Lunch", "Dinner"]
