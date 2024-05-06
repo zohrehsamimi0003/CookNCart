@@ -2,7 +2,6 @@ import tkinter
 from start_app import StartApp
 from main_window import MainWindow
 from database import Database
-from session import Session
 
 def main():
     """Starts the application."""  

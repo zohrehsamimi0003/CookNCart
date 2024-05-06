@@ -1,7 +1,7 @@
 import tkinter
 from tkinter import messagebox
 import database
-import cook_module
+import helpers
 
 class DisplyProfile:
     
@@ -15,7 +15,7 @@ class DisplyProfile:
         frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA')
 
         CookNCart = tkinter.Button(
-            frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = cook_module.cook_n_cart_clicked )
+            frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = helpers.cook_n_cart_clicked )
         name_label = tkinter.Label(
             frame, text="Name                 ", bg='#AED6F1', font=("Georgia", 12))
         name_var = tkinter.StringVar(value=self.created_user_obj.name)
@@ -69,7 +69,7 @@ class DisplyProfile:
         if rowcount == 1:
             self.created_user_obj.update_user_data(new_name, new_password, new_diet_type)
             tkinter.messagebox.showinfo("Update", "Data updated successfully!")
-            cook_module.cook_n_cart_clicked(self.main_win, self.created_user_obj)
+            helpers.cook_n_cart_clicked(self.main_win, self.created_user_obj)
         else:
             tkinter.messagebox.showerror("Database Connection Error. Please try later.")
 

@@ -39,7 +39,7 @@ class Table(tk.Frame):
         
     def update_table(self):
         # Fetch data from the database
-        data = self.my_db.meal_planner_recipes()
+        #data = self.my_db.meal_planner_recipes()
          # Implemented this method in Zaskia Database class
 
         # Update table cells with fetched data

@@ -2,13 +2,14 @@ import tkinter
 from tkinter import messagebox
 import main_window
 from meal_planner_table import Table
-import cook_module
-
+import helpers
+import welcome_screen
+import display_profile
 class MealPlanner:
     
-    def __init__(self, main_win,my_db, created_user_obj):
+    def __init__(self, main_win,my_db):
         self.main_win = main_win
-        self.created_user_obj = created_user_obj
+        #self.created_user_obj = created_user_obj
         self.my_db = my_db
         self.create_widgets()
 
@@ -19,10 +20,10 @@ class MealPlanner:
 
 
         CookNCart = tkinter.Button(
-            frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid', command = cook_module.cook_n_cart_clicked(self.created_user_obj))
-        Log_off = tkinter.Button( frame, text="Log_off",bg='#F5B7B1', font=("Georgia", 11), command=cook_module.log_off_button_clicked)
-        Profile = tkinter.Button( frame, text="Profile",bg='#F5B7B1', font=("Georgia", 11), command=cook_module.profile_button_clicked(self.created_user_obj))
-        Send=tkinter.Button(frame, text="Send",bg='#F5B7B1', font=("Georgia", 11), command=send)
+            frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid', command = self.cook_n_cart_btn_clicked)
+        Log_off = tkinter.Button( frame, text="Log_off",bg='#F5B7B1', font=("Georgia", 11), command = self.log_off_btn_clicked)
+        Profile = tkinter.Button( frame, text="Profile",bg='#F5B7B1', font=("Georgia", 11), command= self.profile_btn_clicked)
+        Send=tkinter.Button(frame, text="Send",bg='#F5B7B1', font=("Georgia", 11), command=self.send)
         table = Table(frame)
 
         CookNCart.grid(row=0, column=0, columnspan=3, sticky="nw",padx=20, pady=20) 
@@ -39,17 +40,17 @@ class MealPlanner:
         table.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
     
-    # def cook_n_cart_clicked(self):
-    #     welcome_screen.WelcomeScreen(self.main_win, self.created_user_obj)
+    def cook_n_cart_btn_clicked(self):
+         welcome_screen.WelcomeScreen(self.main_win, self.created_user_obj)
 
-    # def log_off_button_clicked(self):
-    #     """Exits the application if user opt to log off."""
-    #     self.main_win.destroy()
+    def log_off_btn_clicked(self):
+         """Exits the application if user opt to log off."""
+         self.main_win.destroy()
 
-    # def profile_button_clicked(self):
-    #     """Display the saved user profile."""
-    #     self.clear_widgets()
-    #     display_profile.DisplayProfile(self.main_win, self.created_user_obj)
+    def profile_btn_clicked(self):
+         """Display the saved user profile."""
+         self.clear_widgets()
+         display_profile.DisplayProfile(self.main_win, self.created_user_obj)
 
-    def send(): #ZASKIA HANDLE THIS
+    def send(self): #ZASKIA HANDLE THIS
         pass

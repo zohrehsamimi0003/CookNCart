@@ -64,8 +64,6 @@ class StartApp:
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user = User(user_found)
-            
-            print("Creating WelcomeScreen instance...")
             self.clear_and_add_widgets()       
             welcome_screen.WelcomeScreen(self.main_win, self.my_db)  
                 

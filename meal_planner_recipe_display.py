@@ -1,6 +1,6 @@
 import tkinter as tk
 import main_window
-import cook_module
+import helpers
 
 def log_off():
     pass
@@ -24,8 +24,8 @@ frame = tk.Frame(root, bg='#F9EBEA')
 
 cook_n_cart = tk.Button(
     frame, text="CookNCart", bg='#D2B4DE', font=("Comic Sans MS", 25), borderwidth=1, relief='solid' )
-log_off_button = tk.Button(frame, text="Log_off", bg='#F5B7B1', font=("Georgia", 11), command=cook_module.log_off_button_clicked)
-profile_button = tk.Button(frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=cook_module.profile_button_clicked)
+log_off_button = tk.Button(frame, text="Log_off", bg='#F5B7B1', font=("Georgia", 11), command=helpers.log_off_button_clicked)
+profile_button = tk.Button(frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=helpers.profile_button_clicked)
 shopping_list_button = tk.Button(frame, text="Shopping List", bg='#F5B7B1', font=("Georgia", 11), command=shopping_list)
 
 canvas = tk.Canvas(frame, bg="white", bd=2, relief="solid")

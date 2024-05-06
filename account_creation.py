@@ -3,7 +3,7 @@ from user import User
 import database
 import welcome_screen
 import start_app
-import cook_module
+import helpers
 
 class AccountCreation:
 
@@ -16,7 +16,7 @@ class AccountCreation:
         self.frame = tkinter.Frame(self.main_win.root,width=1000, height=1000, bg='#F9EBEA')
 
         CookNCart = tkinter.Button(
-            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid', command = self.cook_n_cart_button)
+            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid', command = self.back_btn_clicked)
         name_label = tkinter.Label(
             self.frame, text="Name", bg='#AED6F1', font=("Georgia", 12))
         self.name_entry = tkinter.Entry(
@@ -87,9 +87,13 @@ class AccountCreation:
     
     def cook_n_cart_button(self):
         """Clear widgets from main window & switches screen"""
-        cook_module.clear_widgets()
-        start_app.StartApplication(self.main_win, self.my_db)
+        helpers.clear_widgets()
+        start_app.StartApp(self.main_win, self.my_db)
 
     def clear_and_add_widgets(self):
         """Clear widgets from main window and switch screen."""
         self.frame.destroy()
+
+    def back_btn_clicked(self):
+        self.frame.destroy()
+        start_app.StartApp(self.main_win, self.my_db)
