@@ -29,10 +29,7 @@ class WelcomeScreen:
             self.frame, text="Log Off", bg='#F5B7B1', font=("Georgia", 11), command=self.log_off_button_clicked)
         profile_button = tkinter.Button(
             self.frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=helpers.profile_button_clicked)
-        back_button = tkinter.Button(
-            self.frame, text="Back", bg='#F5B7B1', font=("Georgia", 11), command=self.back_btn_clicked)
-        
-        back_button.grid(row=0, column=0, sticky="nw", padx=10, pady=10)
+
         CookNCart.grid(row=0, column=2, columnspan=3, sticky="ne", padx=20, pady=20)
         Meal_planner_label.grid(row=1, column=0, columnspan=3, pady=20, ipadx=50, ipady=20)
         Search_recipe_label.grid(row=2, column=0, columnspan=3, pady=20, ipadx=50, ipady=20)
