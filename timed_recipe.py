@@ -7,10 +7,11 @@ import start_app
 
 class TimedRecipe:
     
-    def __init__(self, main_win, my_db):
-        self.main_win = main_win
+    def __init__(self, session):        
+        self.session = session
+        self.main_win = session.main_win
         #self.user = user
-        self.my_db = my_db
+        self.my_db = session.my_db
         self.create_widgets()
 
     def create_widgets(self):
@@ -50,7 +51,7 @@ class TimedRecipe:
             
     def log_off_button_clicked(self):  
         self.frame.destroy()
-        start_app.StartApp(self.main_win, self.my_db)
+        start_app.StartApp(self.session)
 
     def profile_button_clicked(self):
         self.clear_widgets()

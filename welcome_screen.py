@@ -6,12 +6,13 @@ import search_recipe
 import helpers
 import start_app
 from datetime import datetime
+import session
 
 class WelcomeScreen:
-    def __init__(self, main_win, my_db):
-        self.main_win = main_win
-        self.my_db = my_db
-        #self.user = user
+    def __init__(self, session):
+        self.session = session
+        self.main_win = session.main_win
+        self.my_db = session.my_db
         self.create_widgets()
 
     def create_widgets(self):
@@ -42,42 +43,33 @@ class WelcomeScreen:
 
     def meal_planner_button_clicked(self):
        self.frame.destroy()
-       meal_planner.MealPlanner(self.main_win, self.my_db)
+       meal_planner.MealPlanner(self.session)
 
     def log_off_button_clicked(self):
         self.clear_widgets()
-        start_app.StartApp(self.main_win, self.my_db)
+        start_app.StartApp(self.session)
 
     def timed_recipe_button_clicked(self):
         now = datetime.now()
         current_time = now.time()   
         if current_time <= datetime.strptime('10:30', '%H:%M').time():
             time_of_day = "breakfast"
-            timed_recipe.TimedRecipe(self.main_win, self.my_db)
+            timed_recipe.TimedRecipe(self.session)
         elif current_time <= datetime.strptime('14:30', '%H:%M').time():
             time_of_day = "Lunch"
-            timed_recipe.TimedRecipe(self.main_win, self.my_db)
+            timed_recipe.TimedRecipe(self.session)
         else:
             time_of_day = "Dinner"            
-            timed_recipe.TimedRecipe(self.main_win, self.my_db)                  
-        self.clear_widgets()
-
-
+            timed_recipe.TimedRecipe(self.session)                  
+        self.frame.destroy()
 
     def search_recipe_button_clicked(self):    
         self.frame.destroy()
-        search_recipe.SearchRecipe(self.main_win, self.my_db)
-
-
-#Used for testing . ZASKIA you can delete it.    
-        
-    def clear_widgets(self):
-        """Clear widgets from main window and switch screen."""
-        self.frame.destroy()
+        search_recipe.SearchRecipe(self.session)
     
     def back_btn_clicked(self):
         self.frame.destroy()
-        start_app.StartApp(self.main_win, self.my_db)
+        start_app.StartApp(self.session)
 
     # def profile_button_clicked(self):
     #     """Display the saved user profile."""

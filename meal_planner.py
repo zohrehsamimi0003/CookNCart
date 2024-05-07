@@ -7,10 +7,11 @@ import welcome_screen
 import display_profile
 class MealPlanner:
     
-    def __init__(self, main_win,my_db):
-        self.main_win = main_win
+    def __init__(self, session):
+        self.session = session
+        self.main_win = session.main_win
         #self.created_user_obj = created_user_obj
-        self.my_db = my_db
+        self.my_db = session.my_db
         self.create_widgets()
 
 
@@ -50,7 +51,7 @@ class MealPlanner:
     def profile_btn_clicked(self):
          """Display the saved user profile."""
          self.clear_widgets()
-         display_profile.DisplayProfile(self.main_win, self.created_user_obj)
+         display_profile.DisplayProfile(self.session, self.created_user_obj)
 
     def send(self): #ZASKIA HANDLE THIS
         pass

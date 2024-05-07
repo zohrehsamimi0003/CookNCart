@@ -5,10 +5,11 @@ import helpers
 
 class DisplyProfile:
     
-    def __init__(self, main_win,my_db, created_user_obj):
-        self.main_win = main_win
-        self.created_user_obj = created_user_obj
-        self.my_db = my_db
+    def __init__(self, session):
+        self.session = session
+        self.main_win = session.main_win
+        self.user = session.user
+        self.my_db = session.my_db
         self.create_widgets()
     
     def create_widgets(self):    
@@ -69,7 +70,7 @@ class DisplyProfile:
         if rowcount == 1:
             self.created_user_obj.update_user_data(new_name, new_password, new_diet_type)
             tkinter.messagebox.showinfo("Update", "Data updated successfully!")
-            helpers.cook_n_cart_clicked(self.main_win, self.created_user_obj)
+            helpers.cook_n_cart_clicked(self.session)
         else:
             tkinter.messagebox.showerror("Database Connection Error. Please try later.")
 

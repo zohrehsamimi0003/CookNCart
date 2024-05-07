@@ -4,13 +4,15 @@ from user import User
 import database
 import account_creation
 import welcome_screen
+from session import Session
 
 
 class StartApp:
     
-    def __init__(self, main_win, my_db):
-        self.main_win = main_win
-        self.my_db = my_db
+    def __init__(self, session):
+        self.session = session
+        self.my_db = session.my_db
+        self.main_win = session.main_win
         self.create_widgets()
         
     def create_widgets(self):
@@ -65,7 +67,7 @@ class StartApp:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user = User(user_found)
             self.clear_and_add_widgets()       
-            welcome_screen.WelcomeScreen(self.main_win, self.my_db)  
+            welcome_screen.WelcomeScreen(self.session)  
                 
     
     def clear_and_add_widgets(self):
@@ -75,4 +77,4 @@ class StartApp:
     def create_button_clicked(self):
         """Clear widgets and switch screen."""
         self.clear_and_add_widgets()         
-        account_creation.AccountCreation(self.main_win, self.my_db)
+        account_creation.AccountCreation(self.session)

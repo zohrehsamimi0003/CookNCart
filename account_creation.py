@@ -7,9 +7,10 @@ import helpers
 
 class AccountCreation:
 
-    def __init__(self,main_win, my_db):
-        self.main_win = main_win
-        self.my_db = my_db
+    def __init__(self, session):
+        self.session = session
+        self.main_win = session.main_win
+        self.my_db = session.my_db
         self.create_widgets()
     
     def create_widgets(self):    
@@ -88,12 +89,12 @@ class AccountCreation:
     def cook_n_cart_button(self):
         """Clear widgets from main window & switches screen"""
         helpers.clear_widgets()
-        start_app.StartApp(self.main_win, self.my_db)
+        start_app.StartApp(self.session)
 
     def clear_and_add_widgets(self):
         """Clear widgets from main window and switch screen."""
         self.frame.destroy()
 
-    def back_btn_clicked(self):
+    def back_btn_clicked(self, frame):
         self.frame.destroy()
-        start_app.StartApp(self.main_win, self.my_db)
+        start_app.StartApp(self.session)
