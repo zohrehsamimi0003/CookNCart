@@ -66,9 +66,8 @@ class StartApp:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
-            user = User(user_found)
+            self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3])
             helpers.clear_widgets(self.frame)
-            #self.frame.destroy()  
             welcome_screen.WelcomeScreen(self.session)  
                 
     

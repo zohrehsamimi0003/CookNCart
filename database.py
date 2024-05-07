@@ -30,7 +30,8 @@ class Database:
     def check_if_user_exists(self, email):
         try:
             my_cursor = self.conn.cursor()
-            query = "SELECT * FROM users WHERE Email = %s"
+            query = '''SELECT UserName, UserPassword, EMail, DietType FROM users
+             JOIN diet_types ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s'''
             my_cursor.execute(query, (email,))
             user = my_cursor.fetchone()
             return user #You can do: if user: blah else: call the insert method
@@ -79,7 +80,7 @@ class Database:
             print(f"Database Error: {e}")
             
     #UPDATES THE INFORMATION OF AN EXISTING USER. PLEASE FIX THE QUERY ACCORDINGLY
-    def change_user_info(self, mail,name,diet_type, new_password): #pass user object here and the new password from the entry box
+    def update_user(self, mail,name,diet_type, new_password): #pass user object here and the new password from the entry box
         try:
             my_cursor = self.conn.cursor()
             query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
