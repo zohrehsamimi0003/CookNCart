@@ -13,11 +13,11 @@ class WelcomeScreen:
         self.session = session
         self.main_win = session.main_win
         self.my_db = session.my_db
-        self.create_widgets()
+        self.create_widgets()    
 
     def create_widgets(self):
-        self.frame = tkinter.Frame(self.main_win.root, width=1000, height=1000, bg='#F9EBEA')
 
+        self.frame = tkinter.Frame(self.main_win.root, width=1000, height=1000, bg='#F9EBEA')
         CookNCart = tkinter.Button(
             self.frame, text="CookNCart", bg='#D2B4DE', font=("Comic Sans MS", 25))
         Meal_planner_label = tkinter.Button(
@@ -29,7 +29,7 @@ class WelcomeScreen:
         log_off_button = tkinter.Button(
             self.frame, text="Log Off", bg='#F5B7B1', font=("Georgia", 11), command=self.log_off_button_clicked)
         profile_button = tkinter.Button(
-            self.frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=helpers.profile_button_clicked)
+            self.frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=self.profile_button_clicked)
 
         CookNCart.grid(row=0, column=2, columnspan=3, sticky="ne", padx=20, pady=20)
         Meal_planner_label.grid(row=1, column=0, columnspan=3, pady=20, ipadx=50, ipady=20)
@@ -44,10 +44,6 @@ class WelcomeScreen:
     def meal_planner_button_clicked(self):
        self.frame.destroy()
        meal_planner.MealPlanner(self.session)
-
-    def log_off_button_clicked(self):
-        self.clear_widgets()
-        start_app.StartApp(self.session)
 
     def timed_recipe_button_clicked(self):
         now = datetime.now()
@@ -71,8 +67,9 @@ class WelcomeScreen:
         self.frame.destroy()
         start_app.StartApp(self.session)
 
-    # def profile_button_clicked(self):
-    #     """Display the saved user profile."""
-    #     cook_module.clear_widgets()
-    #     display_profile.DisplayProfile(self.main_win, self.created_user_obj)
+    def profile_button_clicked(self):
+        helpers.profile_btn_screen_change(self.frame, self.session)
+
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)
         

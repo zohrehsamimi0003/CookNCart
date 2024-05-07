@@ -3,7 +3,7 @@ from tkinter import messagebox
 import database
 import helpers
 
-class DisplyProfile:
+class DisplayProfile:
     
     def __init__(self, session):
         self.session = session
@@ -73,6 +73,13 @@ class DisplyProfile:
             helpers.cook_n_cart_clicked(self.session)
         else:
             tkinter.messagebox.showerror("Database Connection Error. Please try later.")
+
+
+    def profile_button_clicked(self):
+        helpers.profile_btn_screen_change(self.frame, self.session)
+
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)
 
         
          

@@ -75,7 +75,7 @@ class AccountCreation:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
                 user = User((name, mail, pwd, meal))
                 self.clear_and_add_widgets()
-                welcome_screen.WelcomeScreen(self.main_win, self.my_db)
+                welcome_screen.WelcomeScreen(self.session)
 
     
             else:

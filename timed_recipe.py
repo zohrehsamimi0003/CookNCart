@@ -49,12 +49,11 @@ class TimedRecipe:
         canvas.itemconfig(entry_window, width=250, height=60)
         canvas.bind('<Button-1>', lambda event: canvas.coords(entry_window, event.x, event.y))
             
-    def log_off_button_clicked(self):  
-        self.frame.destroy()
-        start_app.StartApp(self.session)
-
     def profile_button_clicked(self):
-        self.clear_widgets()
+        helpers.profile_btn_screen_change(self.frame, self.session)
+
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def send_button_clicked(self):
         pass

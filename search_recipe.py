@@ -1,5 +1,6 @@
 import tkinter
 import start_app
+import helpers
 
 class SearchRecipe:
     def __init__(self, session):
@@ -28,7 +29,7 @@ class SearchRecipe:
         log_off = tkinter.Button(self.frame, text="Log_off", bg='#F5B7B1',
                                 font=("Georgia", 11), command=self.log_off_button_clicked)
         Profile = tkinter.Button(self.frame, text="Profile", bg='#F5B7B1',
-                                font=("Georgia", 11), command=self.profile)
+                                font=("Georgia", 11), command=self.profile_button_clicked)
 
         cookNcart.grid(row=0, column=0, sticky="nw")
         No_of_people.grid(row=1, column=0, sticky="e",
@@ -48,8 +49,8 @@ class SearchRecipe:
 
         self.frame.pack(fill=tkinter.BOTH, expand=True)
 
-    def profile():
-        pass
-    def log_off_button_clicked(self):  
-        self.frame.destroy()
-        start_app.StartApp(self.session)
+    def profile_button_clicked(self):
+        helpers.profile_btn_screen_change(self.frame, self.session)
+
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)

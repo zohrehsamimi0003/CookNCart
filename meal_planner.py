@@ -44,14 +44,11 @@ class MealPlanner:
     def cook_n_cart_btn_clicked(self):
          welcome_screen.WelcomeScreen(self.main_win, self.created_user_obj)
 
-    def log_off_btn_clicked(self):
-         """Exits the application if user opt to log off."""
-         self.main_win.destroy()
+    def profile_button_clicked(self):
+        helpers.profile_btn_screen_change(self.frame, self.session)
 
-    def profile_btn_clicked(self):
-         """Display the saved user profile."""
-         self.clear_widgets()
-         display_profile.DisplayProfile(self.session, self.created_user_obj)
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def send(self): #ZASKIA HANDLE THIS
         pass

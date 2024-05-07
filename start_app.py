@@ -5,6 +5,7 @@ import database
 import account_creation
 import welcome_screen
 from session import Session
+import helpers
 
 
 class StartApp:
@@ -66,15 +67,16 @@ class StartApp:
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
             user = User(user_found)
-            self.clear_and_add_widgets()       
+            helpers.clear_widgets(self.frame)
+            #self.frame.destroy()  
             welcome_screen.WelcomeScreen(self.session)  
                 
     
     def clear_and_add_widgets(self):
         """Clear widgets from main window and switch screen."""
-        self.frame.destroy()
+        helpers.clear_widgets(self.frame)
             
     def create_button_clicked(self):
         """Clear widgets and switch screen."""
-        self.clear_and_add_widgets()         
+        helpers.clear_widgets(self.frame)     
         account_creation.AccountCreation(self.session)
