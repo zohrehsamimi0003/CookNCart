@@ -69,12 +69,7 @@ class StartApp:
             self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3])
             helpers.clear_widgets(self.frame)
             welcome_screen.WelcomeScreen(self.session)  
-                
-    
-    def clear_and_add_widgets(self):
-        """Clear widgets from main window and switch screen."""
-        helpers.clear_widgets(self.frame)
-            
+                       
     def create_button_clicked(self):
         """Clear widgets and switch screen."""
         helpers.clear_widgets(self.frame)     

@@ -57,14 +57,14 @@ class WelcomeScreen:
         else:
             time_of_day = "Dinner"            
             timed_recipe.TimedRecipe(self.session)                  
-        self.frame.destroy()
+        helpers.clear_widgets(self.frame)
 
     def search_recipe_button_clicked(self):    
-        self.frame.destroy()
+        helpers.clear_widgets(self.frame)
         search_recipe.SearchRecipe(self.session)
     
     def back_btn_clicked(self):
-        self.frame.destroy()
+        helpers.clear_widgets(self.frame)
         start_app.StartApp(self.session)
 
     def profile_button_clicked(self):

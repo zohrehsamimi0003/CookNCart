@@ -74,25 +74,13 @@ class AccountCreation:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
                 self.session.user = User(name, mail, pwd, meal)
                 helpers.clear_widgets(self.frame)
-                welcome_screen.WelcomeScreen(self.session)
-
-    
+                welcome_screen.WelcomeScreen(self.session)    
             else:
                 tkinter.messagebox.showerror("Error", "Failed to create account.")    
         elif found_user is False:
             tkinter.messagebox.showerror("Error", "Database Connection Error.")
         else:                
             tkinter.messagebox.showerror("Error","User already exist.")
-
-    
-    #def cook_n_cart_button(self):
-        #"""Clear widgets from main window & switches screen"""
-        #helpers.clear_widgets()
-        #start_app.StartApp(self.session)
-
-    def clear_and_add_widgets(self):
-        """Clear widgets from main window and switch screen."""
-        self.frame.destroy()
 
     def back_btn_clicked(self):
         helpers.clear_widgets(self.frame)

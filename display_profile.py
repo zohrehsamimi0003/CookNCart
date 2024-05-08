@@ -18,28 +18,27 @@ class DisplayProfile:
         CookNCart = tkinter.Button(
             frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = helpers.cook_n_cart_clicked )
         name_label = tkinter.Label(
-            frame, text="Name                 ", bg='#AED6F1', font=("Georgia", 12))
+            frame, text="Name", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         name_var = tkinter.StringVar(value=self.created_user_obj.name)
         name_entry = tkinter.Entry(frame,bg='#D2B4DE' ,font=("Georgia", 12), textvariable=name_var)
 
         Email = tkinter.Label(
-            frame, text="Email_ID            ", bg='#AED6F1', font=("Georgia", 12))
+            frame, text="Email_ID", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         email_var = tkinter.StringVar(value=self.created_user_obj.email)
         Email_entry = tkinter.Entry(
             frame,bg='#D2B4DE' , font=("Georgia", 12), textvariable=email_var, state="readonly")
         Password_label = tkinter.Label(
-            frame, text="Password           ", bg='#AED6F1', font=("Georgia", 12))
+            frame, text="Password", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         password_var = tkinter.StringVar(value=self.created_user_obj.password)
         Password_entry= tkinter.Entry(
             frame,bg='#D2B4DE' , font=("Georgia", 12),textvariable=password_var)
         Meal_Preference = tkinter.Label(    
-            frame, text="Meal Preference", bg='#AED6F1', font=("Georgia", 12))
+            frame, text="Meal Preference", bg='#AED6F1', font=("Georgia", 12),  width=20, anchor="w")
         meal_pre_var = tkinter.StringVar(value=self.self.created_user_obj.diet_type)
         Meal_preference_entry= tkinter.Entry(
             frame,bg='#D2B4DE' , font=("Georgia", 12), textvariable = meal_pre_var)
         update_account_button = tkinter.Button(
             frame, text="Update",bg='#F5B7B1', font=("Georgia", 11), command=self.update_button_clicked)
-
 
 
         # Place widgets on screen

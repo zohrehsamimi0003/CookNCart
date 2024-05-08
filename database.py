@@ -1,7 +1,5 @@
 
 import mysql.connector
-from tkinter import messagebox
-from datetime import datetime, time
 
 class Database:
     def __init__(self):
