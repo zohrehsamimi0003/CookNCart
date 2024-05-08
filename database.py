@@ -7,13 +7,8 @@ class Database:
     def __init__(self):
         self.conn = mysql.connector.connect(
             host="localhost",
-<<<<<<< HEAD
             user="zaskia",
             password="testpw",
-=======
-            user="meenu",
-            password="1234",
->>>>>>> main
             database="cookncart"
         )
     
@@ -21,12 +16,8 @@ class Database:
     def login_validation(self, mail, pwd):
         try:
             my_cursor = self.conn.cursor()
-<<<<<<< HEAD
             query = '''SELECT UserName, UserPassword, EMail, DietType FROM users
              JOIN diet_types ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s AND UserPassword = %s'''
-=======
-            query = "SELECT * FROM users WHERE Email = %s AND UserPassword = %s"
->>>>>>> main
             my_cursor.execute(query, (mail, pwd))
             user = my_cursor.fetchone()
             return user
@@ -39,12 +30,8 @@ class Database:
     def check_if_user_exists(self, email):
         try:
             my_cursor = self.conn.cursor()
-<<<<<<< HEAD
             query = '''SELECT UserName, UserPassword, EMail, DietType FROM users
              JOIN diet_types ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s'''
-=======
-            query = "SELECT * FROM users WHERE Email = %s"
->>>>>>> main
             my_cursor.execute(query, (email,))
             user = my_cursor.fetchone()
             return user #You can do: if user: blah else: call the insert method
@@ -93,11 +80,7 @@ class Database:
             print(f"Database Error: {e}")
             
     #UPDATES THE INFORMATION OF AN EXISTING USER. PLEASE FIX THE QUERY ACCORDINGLY
-<<<<<<< HEAD
     def update_user(self, mail,name,diet_type, new_password): #pass user object here and the new password from the entry box
-=======
-    def change_user_info(self, mail,name,diet_type, new_password): #pass user object here and the new password from the entry box
->>>>>>> main
         try:
             my_cursor = self.conn.cursor()
             query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
@@ -111,7 +94,6 @@ class Database:
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
             
-<<<<<<< HEAD
      #UPDATES THE PASSWORD OF AN EXISTING USER
     def update_password(self, user, new_password): #pass user object here and the new password from the entry box
         try:
@@ -144,42 +126,6 @@ class Database:
             return rowcount
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
-=======
-    # #UPDATES THE PASSWORD OF AN EXISTING USER
-    # def update_password(self, user, new_password): #pass user object here and the new password from the entry box
-    #     try:
-    #         my_cursor = self.conn.cursor()
-    #         query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
-    #         parameters = (new_password, user.email)
-    #         my_cursor.execute(query, parameters)
-    #         self.conn.commit()
-    #         rowcount = my_cursor.rowcount
-
-    #         my_cursor.close()
-    #         return rowcount
-    #     except mysql.connector.Error as e: 
-    #         print(f"Database Error: {e}")
-
-    # #UPDATES THE DIET TYPE OF AN EXISTING USER
-    # def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
-    #     try:
-    #         my_cursor = self.conn.cursor()
-    #         select_query = "SELECT DietTypeId FROM diet_types WHERE DietType = %s"
-    #         my_cursor.execute(select_query, (new_diet_type,))
-    #         diet_type_result = my_cursor.fetchone()
-    #         query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
-    #         UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;'''
-    #         parameters = (diet_type_result, user.email)
-    #         my_cursor.execute(query, parameters)
-    #         # Finally, commit the transaction
-    #         self.conn.commit()
-    #         rowcount = my_cursor.rowcount
-
-    #         my_cursor.close()
-    #         return rowcount
-    #     except mysql.connector.Error as e: 
-    #         print(f"Database Error: {e}")
->>>>>>> main
 
 
 
@@ -208,28 +154,16 @@ class Database:
             return False
 
 #ZASKIA CHECK THIS METHOD
-<<<<<<< HEAD
 '''def meal_planner_recipes(self): 
-=======
-def meal_planner_recipes(self): 
->>>>>>> main
     # Provides 7 recipes each for breakfast, lunch & dinner
     # that can be populated in meal_planner table.
     try:
         my_cursor = self.conn.cursor()
-<<<<<<< HEAD
         query =''' '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
                 INNER JOIN meal_times ON recipes.MealTimeId = meal_times.MealTimeId
                 INNER JOIN diet_types ON recipes.DietType = diet_types.DietTypeId
                 WHERE meal_times.MealTime IN ('Breakfast', 'Lunch', 'Dinner')
                 ORDER BY MealTime, RAND();''''''
-=======
-        query = '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
-                INNER JOIN meal_times ON recipes.MealTimeId = meal_times.MealTimeId
-                INNER JOIN diet_types ON recipes.DietType = diet_types.DietTypeId
-                WHERE meal_times.MealTime IN ('Breakfast', 'Lunch', 'Dinner')
-                ORDER BY MealTime, RAND();'''
->>>>>>> main
 
         my_cursor.execute(query)
         list_of_recipes = my_cursor.fetchall()
@@ -237,11 +171,7 @@ def meal_planner_recipes(self):
         return list_of_recipes
     except mysql.connector.Error as e:
         print(f"Database Error: {e}")
-<<<<<<< HEAD
         return False'''
-=======
-        return False
->>>>>>> main
 
 
     
