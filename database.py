@@ -94,40 +94,38 @@ class Database:
         except mysql.connector.Error as e: 
             print(f"Database Error: {e}")
             
-    # #UPDATES THE PASSWORD OF AN EXISTING USER
-    # def update_password(self, user, new_password): #pass user object here and the new password from the entry box
-    #     try:
-    #         my_cursor = self.conn.cursor()
-    #         query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
-    #         parameters = (new_password, user.email)
-    #         my_cursor.execute(query, parameters)
-    #         self.conn.commit()
-    #         rowcount = my_cursor.rowcount
+     #UPDATES THE PASSWORD OF AN EXISTING USER
+    def update_password(self, user, new_password): #pass user object here and the new password from the entry box
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
+            parameters = (new_password, user.email)
+            my_cursor.execute(query, parameters)
+            self.conn.commit()
+            rowcount = my_cursor.rowcount
+            my_cursor.close()
+            return rowcount
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
-    #         my_cursor.close()
-    #         return rowcount
-    #     except mysql.connector.Error as e: 
-    #         print(f"Database Error: {e}")
-
-    # #UPDATES THE DIET TYPE OF AN EXISTING USER
-    # def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
-    #     try:
-    #         my_cursor = self.conn.cursor()
-    #         select_query = "SELECT DietTypeId FROM diet_types WHERE DietType = %s"
-    #         my_cursor.execute(select_query, (new_diet_type,))
-    #         diet_type_result = my_cursor.fetchone()
-    #         query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
-    #         UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;'''
-    #         parameters = (diet_type_result, user.email)
-    #         my_cursor.execute(query, parameters)
-    #         # Finally, commit the transaction
-    #         self.conn.commit()
-    #         rowcount = my_cursor.rowcount
-
-    #         my_cursor.close()
-    #         return rowcount
-    #     except mysql.connector.Error as e: 
-    #         print(f"Database Error: {e}")
+     #UPDATES THE DIET TYPE OF AN EXISTING USER
+    def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
+        try:
+            my_cursor = self.conn.cursor()
+            select_query = "SELECT DietTypeId FROM diet_types WHERE DietType = %s"
+            my_cursor.execute(select_query, (new_diet_type,))
+            diet_type_result = my_cursor.fetchone()
+            query = '''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
+            UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;'''
+            parameters = (diet_type_result, user.email)
+            my_cursor.execute(query, parameters)
+            # Finally, commit the transaction
+            self.conn.commit()
+            rowcount = my_cursor.rowcount
+            my_cursor.close()
+            return rowcount
+        except mysql.connector.Error as e: 
+            print(f"Database Error: {e}")
 
 
 
@@ -156,16 +154,16 @@ class Database:
             return False
 
 #ZASKIA CHECK THIS METHOD
-def meal_planner_recipes(self): 
+'''def meal_planner_recipes(self): 
     # Provides 7 recipes each for breakfast, lunch & dinner
     # that can be populated in meal_planner table.
     try:
         my_cursor = self.conn.cursor()
-        query = '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
+        query =''' '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
                 INNER JOIN meal_times ON recipes.MealTimeId = meal_times.MealTimeId
                 INNER JOIN diet_types ON recipes.DietType = diet_types.DietTypeId
                 WHERE meal_times.MealTime IN ('Breakfast', 'Lunch', 'Dinner')
-                ORDER BY MealTime, RAND();'''
+                ORDER BY MealTime, RAND();''''''
 
         my_cursor.execute(query)
         list_of_recipes = my_cursor.fetchall()
@@ -173,7 +171,7 @@ def meal_planner_recipes(self):
         return list_of_recipes
     except mysql.connector.Error as e:
         print(f"Database Error: {e}")
-        return False
+        return False'''
 
 
     
