@@ -72,7 +72,7 @@ class AccountCreation:
             rowcount = self.my_db.insert_user(name, mail, pwd, meal)
             if rowcount == 1:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
-                self.session.user = User(name, mail, pwd, meal)
+                self.session.user = User(name, pwd, mail, meal)
                 helpers.clear_widgets(self.frame)
                 welcome_screen.WelcomeScreen(self.session)    
             else:

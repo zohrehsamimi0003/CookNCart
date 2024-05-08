@@ -78,11 +78,16 @@ class Database:
             print(f"Database Error: {e}")
             
     #UPDATES THE INFORMATION OF AN EXISTING USER. PLEASE FIX THE QUERY ACCORDINGLY
-    def update_user(self, mail,name,diet_type, new_password): #pass user object here and the new password from the entry box
+    def update_user(self, mail, new_name, new_password, new_diet_type): #pass user object here and the new password from the entry box
         try:
             my_cursor = self.conn.cursor()
-            query = '''UPDATE users SET UserPassword = %s WHERE Email = %s;'''
-            parameters = (new_password, user.email)
+
+            # First, execute the SELECT statement
+            select_query = "SELECT DietTypeId FROM diet_types WHERE DietType = %s"
+            my_cursor.execute(select_query, (new_diet_type,))
+            diet_type_result = my_cursor.fetchone()
+            query = '''UPDATE users SET Username = %s, UserPassword = %s, DietTypeId = %s WHERE Email = %s;'''
+            parameters = (new_name, new_password, diet_type_result[0], mail)
             my_cursor.execute(query, parameters)
             self.conn.commit()
             rowcount = my_cursor.rowcount

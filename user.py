@@ -3,7 +3,7 @@ import main_window
 """User class to save the user details retrieved from database based on user input."""
 class User:
     """Initialize the user class."""
-    def __init__(self, name, email, password, diet_type = None):        
+    def __init__(self, name, password,  email, diet_type = None):        
         self.name = name
         self.email = email
         self.password = password
