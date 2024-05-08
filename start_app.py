@@ -35,10 +35,8 @@ class StartApp:
         login_button = tkinter.Button(
             self.frame, text="Login", bg='#F5B7B1', font=("Georgia", 12), 
             command=self.login_button_clicked)
-        forgot_pw_button = tkinter.Button(
-            self.frame, text="Forgot Password", bg='#F5B7B1', font=("Georgia", 12))
         create_account_button = tkinter.Button(
-            self.frame, text="Create Account", bg='#F5B7B1', font=("Georgia", 11),
+            self.frame, text="Create Account", bg='#F5B7B1', font=("Georgia", 12),
             command=self.create_button_clicked)
 
         # Place widgets on screen
@@ -48,8 +46,7 @@ class StartApp:
         password_label.grid(row=2, column=0)  
         self.password_entry.grid(row=2, column=2, pady=20)  
         login_button.grid(row=4, column=0, columnspan=2, pady=30)
-        forgot_pw_button.grid(row=4, column=1, columnspan=2, pady=30)
-        create_account_button.grid(row=0, column=2, padx=10, pady=10, sticky="ne")
+        create_account_button.grid(row=4, column=1, columnspan=2, pady=30)
         
     def login_button_clicked(self):
         """Functionality for log in button"""

@@ -40,7 +40,7 @@ class TimedRecipe:
         self.frame.pack(fill=tk.BOTH, expand=True)
 
         # Add label to canvas
-        label = tk.Label(canvas, text="No.Of people", bg='#F5B7B1', font=("Georgia", 12),padx=20,pady=20)
+        label = tk.Label(canvas, text="", bg='#F5B7B1', font=("Georgia", 12),padx=20,pady=20)
         label_window = canvas.create_window(50, 50, anchor="nw", window=label)
 
         # Add entry to canvas

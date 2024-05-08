@@ -15,15 +15,15 @@ class SearchRecipe:
         cookNcart = tkinter.Button(
             self.frame, text="CookNCart", bg='#F5B7B1', font=("Comic Sans MS", 25), borderwidth=1, relief='solid')
         No_of_people = tkinter.Label(
-            self.frame, text="No.of People             ", bg='#F5B7B1', font=("Georgia", 12))
+            self.frame, text="No.of People", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
         self.No_of_people_entry = tkinter.Entry(
             self.frame, bg='#D2B4DE', font=("Georgia", 12))
         Recipe_name = tkinter.Label(
-            self.frame, text="Recipe Name            ", bg='#F5B7B1', font=("Georgia", 12))
+            self.frame, text="Recipe Name", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
         self.Recipe_name_entry = tkinter.Entry(
             self.frame, bg='#D2B4DE', font=("Georgia", 12))
         List_of_ingredients = tkinter.Label(
-            self.frame, text=" List_of_ingredients", bg='#F5B7B1', font=("Georgia", 12))
+            self.frame, text=" List_of_ingredients", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
         self.List_of_ingredients_entry = tkinter.Entry(
             self.frame, bg='#D2B4DE', font=("Georgia", 12))
         log_off = tkinter.Button(self.frame, text="Log_off", bg='#F5B7B1',
