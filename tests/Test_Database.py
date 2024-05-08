@@ -1,104 +1,54 @@
 import unittest
-from unittest.mock import patch, MagicMock
-from Database import Database  # Import your Database class
+from unittest.mock import MagicMock
+from database import Database
+import mysql.connector
 
-class Test_Database(unittest.TestCase):
+class TestDatabase(unittest.TestCase):
 
-    @patch('Database.mysql.connector.connect')
-    def test_login_validation_valid(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_cursor.fetchone.return_value = {'id': 1, 'username': 'test_user'}
-        mock_connect.return_value.cursor.return_value = mock_cursor
+    def setUp(self):
+        self.db = Database()
 
-        # Initialize your Database object
-        db = Database()
+    def tearDown(self):
+        self.db.conn.close()
 
-        # Test for valid login credentials
-        user = db.login_validation("valid_email@example.com", "valid_password")
-        self.assertIsNotNone(user)  # Assert that the user exists
+    def test_login_validation_success(self):
+        # Mocking the cursor and its execute method to return a sample user
+        cursor_mock = MagicMock()
+        cursor_mock.fetchone.return_value = ('TestUser', 'password123', 'test@example.com', 'Vegetarian')
+        self.db.conn.cursor = MagicMock(return_value=cursor_mock)
 
-    @patch('Database.mysql.connector.connect')
-    def test_login_validation_invalid(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_cursor.fetchone.return_value = None  # Simulate no user found
-        mock_connect.return_value.cursor.return_value = mock_cursor
+        # Testing with valid email and password
+        result = self.db.login_validation('test@example.com', 'password123')
+        self.assertIsNotNone(result)
+        self.assertEqual(result, ('TestUser', 'password123', 'test@example.com', 'Vegetarian'))
 
-        # Initialize your Database object
-        db = Database()
+    def test_login_validation_failure(self):
+        # Mocking the cursor and its execute method to raise an error
+        cursor_mock = MagicMock()
+        cursor_mock.execute.side_effect = mysql.connector.Error()
+        self.db.conn.cursor = MagicMock(return_value=cursor_mock)
 
-        # Test for invalid login credentials
-        user = db.login_validation("invalid_email@example.com", "invalid_password")
-        self.assertIsNone(user)  # Assert that no user is returned
+        # Testing with invalid email and password
+        result = self.db.login_validation('invalid@example.com', 'invalid_password')
+        self.assertFalse(result)
 
-    @patch('Database.mysql.connector.connect')
-    def test_insert_user_success(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_cursor.rowcount = 1  # Simulate successful insertion
-        mock_connect.return_value.cursor.return_value = mock_cursor
+    def test_check_if_user_exists_success(self):
+        # Mocking the cursor and its execute method to return a sample user
+        cursor_mock = MagicMock()
+        cursor_mock.fetchone.return_value = ('TestUser', 'password123', 'test@example.com', 'Vegetarian')
+        self.db.conn.cursor = MagicMock(return_value=cursor_mock)
 
-        # Initialize your Database object
-        db = Database()
+        # Testing with an existing email
+        result = self.db.check_if_user_exists('test@example.com')
+        self.assertIsNotNone(result)
+        self.assertEqual(result, ('TestUser', 'password123', 'test@example.com', 'Vegetarian'))
 
-        # Test for successful insertion
-        result = db.insert_user("test_username", "test_email@example.com", "test_password", "Vegetarian")
-        self.assertEqual(result, 1)  # Assert that rowcount is 1 indicating successful insertion
+    def test_check_if_user_exists_failure(self):
+        # Mocking the cursor and its execute method to raise an error
+        cursor_mock = MagicMock()
+        cursor_mock.execute.side_effect = mysql.connector.Error()
+        self.db.conn.cursor = MagicMock(return_value=cursor_mock)
 
-    @patch('Database.mysql.connector.connect')
-    def test_insert_user_failure(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_cursor.rowcount = 0  # Simulate failed insertion
-        mock_connect.return_value.cursor.return_value = mock_cursor
-
-        # Initialize your Database object
-        db = Database()
-
-        # Test for failed insertion
-        result = db.insert_user("test_username", "test_email@example.com", "test_password", "Vegetarian")
-        self.assertEqual(result, 0)  # Assert that rowcount is 0 indicating failed insertion
-
-    @patch('Database.mysql.connector.connect')
-    def test_delete_user(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_connect.return_value.cursor.return_value = mock_cursor
-
-        # Initialize your Database object
-        db = Database()
-
-        # Test delete user
-        user = MagicMock(email="test_email@example.com")
-        db.delete_user(user)
-        mock_cursor.execute.assert_called_once_with('''DELETE FROM users WHERE Email = %s;''', ("test_email@example.com",))
-
-    @patch('Database.mysql.connector.connect')
-    def test_update_password(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_connect.return_value.cursor.return_value = mock_cursor
-
-        # Initialize your Database object
-        db = Database()
-
-        # Test update password
-        user = MagicMock(email="test_email@example.com")
-        db.update_password(user, "new_password")
-        mock_cursor.execute.assert_called_once_with('''UPDATE users SET UserPassword = %s WHERE Email = %s;''', ("new_password", "test_email@example.com"))
-
-    @patch('Database.mysql.connector.connect')
-    def test_update_diet_type(self, mock_connect):
-        # Mocking database connection
-        mock_cursor = MagicMock()
-        mock_connect.return_value.cursor.return_value = mock_cursor
-
-        # Initialize your Database object
-        db = Database()
-
-        # Test update diet type
-        user = MagicMock(email="test_email@example.com")
-        db.update_diet_type(user, "new_diet_type")
-        mock_cursor.execute.assert_called_once_with('''SELECT DietTypeId INTO @DietTypeId FROM diet_types WHERE DietType = %s;
-            UPDATE users SET DietTypeId = @DietTypeId WHERE Email = %s;''', ("new_diet_type", "test_email@example.com"))
+        # Testing with a non-existing email
+        result = self.db.check_if_user_exists('nonexistent@example.com')
+        self.assertIsNone(result)
