@@ -157,6 +157,17 @@ class Database:
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
             return False
+        
+    def get_diet_types(self):
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT DietType FROM diet_types;'''  
+            my_cursor.execute(query)
+            return my_cursor.fetchall()
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
+
 
 
 '''def meal_planner_recipes(self, meal_time): 

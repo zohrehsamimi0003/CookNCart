@@ -30,10 +30,21 @@ class AccountCreation:
             self.frame, text="Password", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         self.password_entry= tkinter.Entry(
             self.frame,bg='#D2B4DE' , font=("Georgia", 12))
-        meal_preference = tkinter.Label(
-            self.frame, text="Meal Preference", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
-        self.meal_preference_entry= tkinter.Entry(
-            self.frame,bg='#D2B4DE' , font=("Georgia", 12), width=20)
+        
+        #CHNGED MEAL_PREFERENCE TO DIET_TYPE TO MATCH DATABASE
+        #CHANGED THE ENTRY BOX TO A DROPBOX EDIT AS YOU WISH BUT LEAVE THE NAMES AS IS
+        diet_types = self.my_db.get_diet_types()
+        self.selected_diet_type = tkinter.StringVar(self.frame)
+        self.selected_diet_type.set(diet_types[0])
+        diet_type = tkinter.Label(
+            self.frame, text="Diet Type", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
+        self.diet_type_option= tkinter.OptionMenu(
+            self.frame, self.selected_diet_type, *diet_types)
+        self.diet_type_option.config(bg='#D2B4DE', font=("Georgia", 12), width=15)
+        #END OF THE CHANGES I MADE TO TKINTER
+        
+
+
         create_account_button = tkinter.Button(
             self.frame, text="Create",bg='#F5B7B1', font=("Georgia", 12), command=self.create_button_clicked)
 
@@ -46,8 +57,8 @@ class AccountCreation:
         self.email_entry.grid(row=2,column=1,pady=20,padx=(0,200),ipadx=20,ipady=10)
         password_label.grid(row=3,column=0,pady=30,padx=(200,0),ipadx=20,ipady=10)  
         self.password_entry.grid(row=3,column=1,padx=(0,200),pady=20,ipadx=20,ipady=10)  
-        meal_preference.grid(row=4,column=0,pady=30,padx=(200,0),ipadx=20,ipady=10)
-        self.meal_preference_entry.grid(row=4,column=1,padx=(0,200),pady=20,ipadx=20,ipady=10)
+        diet_type.grid(row=4,column=0,pady=30,padx=(200,0),ipadx=20,ipady=10)
+        self.diet_type_option.grid(row=4,column=1,padx=(0,200),pady=20,ipadx=20,ipady=10)
         create_account_button.grid(row=5, column=2, padx=20, pady=(10,5), sticky="se")  # Place the button in the bottom-right corner
 
 
@@ -68,7 +79,8 @@ class AccountCreation:
         if found_user is None:
             name = self.name_entry.get()
             pwd = self.password_entry.get()
-            meal = self.meal_preference_entry.get()
+            meal = self.selected_diet_type.get().strip("(),'")
+            print(type(meal))
             rowcount = self.my_db.insert_user(name, mail, pwd, meal)
             if rowcount == 1:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
