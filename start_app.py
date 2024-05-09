@@ -16,6 +16,31 @@ class StartApp:
         self.main_win = session.main_win
         self.create_widgets()
         
+  
+    def login_button_clicked(self):
+        """Functionality for log in button"""
+        mail = self.email_entry.get()
+        pwd = self.password_entry.get()
+        user_found = self.my_db.login_validation(mail, pwd)
+        self.handle_login(user_found)
+    
+    def handle_login(self, user_found):
+        """Handles the login success. Create user object"""
+        if user_found is None:
+            tkinter.messagebox.showerror("Error", "Invalid email or password")
+        elif user_found is False:
+            tkinter.messagebox.showerror("Database Connection Error.")
+        else:
+            tkinter.messagebox.showinfo("Success", "Login successful!")
+            self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3])
+            helpers.clear_widgets(self.frame)
+            welcome_screen.WelcomeScreen(self.session)  
+                       
+    def create_button_clicked(self):
+        """Clear widgets and switch screen."""
+        helpers.clear_widgets(self.frame)     
+        account_creation.AccountCreation(self.session)
+    
     def create_widgets(self):
         # Create frame
         self.frame = tkinter.Frame(self.main_win.root, width=1000, height=500, bg='#F9EBEA')
@@ -47,27 +72,4 @@ class StartApp:
         self.password_entry.grid(row=2, column=2, pady=20)  
         login_button.grid(row=4, column=0, columnspan=2, pady=30)
         create_account_button.grid(row=4, column=1, columnspan=2, pady=30)
-        
-    def login_button_clicked(self):
-        """Functionality for log in button"""
-        mail = self.email_entry.get()
-        pwd = self.password_entry.get()
-        user_found = self.my_db.login_validation(mail, pwd)
-        self.handle_login(user_found)
     
-    def handle_login(self, user_found):
-        """Handles the login success. Create user object"""
-        if user_found is None:
-            tkinter.messagebox.showerror("Error", "Invalid email or password")
-        elif user_found is False:
-            tkinter.messagebox.showerror("Database Connection Error.")
-        else:
-            tkinter.messagebox.showinfo("Success", "Login successful!")
-            self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3])
-            helpers.clear_widgets(self.frame)
-            welcome_screen.WelcomeScreen(self.session)  
-                       
-    def create_button_clicked(self):
-        """Clear widgets and switch screen."""
-        helpers.clear_widgets(self.frame)     
-        account_creation.AccountCreation(self.session)
