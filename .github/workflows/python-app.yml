@@ -30,7 +30,7 @@ jobs:
         pip install pytest pytest-cov flake8
     - name: Test with pytest
       run: |
-        pytest tests/Test_Database.py
+        pytest tests/test_user.py
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
