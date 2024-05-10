@@ -140,7 +140,7 @@ class Database:
 
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
+            query = '''SELECT RecipeId, RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
                     INNER JOIN meal_times
                     ON recipes.MealTimeId = meal_times.MealTimeId
                     INNER JOIN diet_types
@@ -151,8 +151,6 @@ class Database:
             
             my_cursor.execute(query, (meal_time, number_of_recipes))
             random_recipe = my_cursor.fetchall()
-            
-            print(random_recipe)
             return random_recipe 
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
@@ -169,25 +167,18 @@ class Database:
             return False
 
 
-
-'''def meal_planner_recipes(self, meal_time): 
-    # Provides 7 recipes each for breakfast, lunch & dinner
-    # that can be populated in meal_planner table.
-    try:
-        my_cursor = self.conn.cursor()
-        query =''''''SELECT RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
-                INNER JOIN meal_times ON recipes.MealTimeId = meal_times.MealTimeId
-                INNER JOIN diet_types ON recipes.DietType = diet_types.DietTypeId
-                WHERE meal_times.MealTime IN ('Breakfast', 'Lunch', 'Dinner')
-                ORDER BY MealTime, RAND();''''''
-
-        my_cursor.execute(query)
-        list_of_recipes = my_cursor.fetchall()
-
-        return list_of_recipes
-    except mysql.connector.Error as e:
-        print(f"Database Error: {e}")
-        return False'''
+    def get_recipe_ingredients(self):
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT Ingredient, Quantity, Unit, UnitMeasure  FROM recipe_ingredients 
+                    JOIN ingredients ON recipe_ingredients.IngredientId = ingredients.IngredientId 
+                    JOIN units ON recipe_ingredients.UnitId = units.UnitId
+                    WHERE RecipeId = %s;'''
+            my_cursor.execute(query)
+            return my_cursor.fetchall()
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False        
 
 
     
