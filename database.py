@@ -167,15 +167,15 @@ class Database:
             return False
 
 
-    def get_recipe_ingredients(self):
+    def get_recipe_ingredients(self, recipe_id):
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT Ingredient, Quantity, Unit, UnitMeasure  FROM recipe_ingredients 
-                    JOIN ingredients ON recipe_ingredients.IngredientId = ingredients.IngredientId 
-                    JOIN units ON recipe_ingredients.UnitId = units.UnitId
-                    WHERE RecipeId = %s;'''
-            my_cursor.execute(query)
-            return my_cursor.fetchall()
+            query = '''SELECT Ingredient, Quantity, Unit  FROM recipe_ingredients 
+                    JOIN ingredients ON recipe_ingredients.IngredientId = ingredients.IngredientId
+                    WHERE RecipeId = %s '''
+            my_cursor.execute(query, (recipe_id,))
+            ingredients = my_cursor.fetchall()
+            return ingredients
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
             return False        
