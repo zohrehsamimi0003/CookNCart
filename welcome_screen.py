@@ -93,7 +93,7 @@ class WelcomeScreen:
         log_off_button.grid(row=0, column=1, sticky="ne", padx=10, pady=(0,20), ipadx=20,ipady=10)
         profile_button.grid(row=0, column=2, sticky="ne", padx=10, pady=(0,20), ipadx=20, ipady=10)
         back_button.grid(row=5, column=2, sticky="se", padx=10, pady=(0,20), ipadx=20, ipady=10)
-        description_label_mp.grid(row=2, column=1, padx=10, pady=20, sticky='w')
+        description_label_mp.grid(row=2, column=1, padx=10, pady=(10,20), sticky='w')
         description_label_sr.grid(row=3, column=1, padx=10, pady=20, sticky='w')
         description_label_tr.grid(row=4, column=1, padx=10, pady=20, sticky='w')
 

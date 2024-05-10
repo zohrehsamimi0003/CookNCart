@@ -3,25 +3,42 @@ import main_window
 import helpers
 import database
 import start_app
+from PIL import Image, ImageTk
 
 
 class TimedRecipe:
     
-    def __init__(self, session):        
+    def __init__(self, session, window, recipe_id):        
         self.session = session
-        self.main_win = session.main_win
+        #self.main_win = session.main_win
+        self.window = window
         #self.user = user
         self.my_db = session.my_db
+        self.recipe_id = recipe_id
         self.create_widgets()
 
     def create_widgets(self):
-        self.frame = tk.Frame(self.main_win.root, bg='#F9EBEA')
+        self.frame = tk.Frame(self.window, bg='#F9EBEA')
 
         cook_n_cart = tk.Button(self.frame, text="CookNCart", bg='#D2B4DE', font=("Comic Sans MS", 25), borderwidth=1, relief='solid')
         log_off_button = tk.Button(self.frame, text="Log_off", bg='#F5B7B1', font=("Georgia", 11), command=self.log_off_button_clicked)
         profile_button = tk.Button(self.frame, text="Profile", bg='#F5B7B1', font=("Georgia", 11), command=self.profile_button_clicked)
 
         canvas = tk.Canvas(self.frame, bg="white", bd=2, relief="solid")
+
+
+        # ChatGPT
+        image = Image.open("Images/SampleImage.jpg")
+        tk_image = ImageTk.PhotoImage(image)
+        #image = image.resize((200, 200), Image.ANTIALIAS)
+        image_widget = canvas.create_image(0, 0, anchor="nw", image=tk_image)
+
+        canvas.image = tk_image
+        #label_window = canvas.create_window(50, 50, anchor="nw", window=label)
+        #ChatGPT
+
+        recipe_label = tk.Label(canvas, text=f"Recipe ID: {self.recipe_id}", bg='#F5B7B1', font=("Georgia", 12), padx=20, pady=20)
+        recipe_label_window = canvas.create_window(50, 50, anchor="nw", window=recipe_label)
 
         send_button = tk.Button(self.frame, text="Send", bg='#F5B7B1', font=("Georgia", 11), command=self.send_button_clicked)
 
@@ -38,10 +55,6 @@ class TimedRecipe:
         self.frame.columnconfigure(3, weight=1)
 
         self.frame.pack(fill=tk.BOTH, expand=True)
-
-        # Add label to canvas
-        label = tk.Label(canvas, text="", bg='#F5B7B1', font=("Georgia", 12),padx=20,pady=20)
-        label_window = canvas.create_window(50, 50, anchor="nw", window=label)
 
         # Add entry to canvas
         entry = tk.Entry(canvas, width=50,bg='#D2B4DE')  # Adjust width to add padding

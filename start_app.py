@@ -72,4 +72,3 @@ class StartApp:
         self.password_entry.grid(row=2, column=2, pady=20)  
         login_button.grid(row=4, column=0, columnspan=2, pady=30)
         create_account_button.grid(row=4, column=1, columnspan=2, pady=30)
-    
