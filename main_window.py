@@ -11,7 +11,7 @@ class MainWindow():
         root.configure(bg='#F9EBEA')
 
         # Load and resize the logo image
-        self.logo = Image.open("C:\Software development\Agile development\CookNCart\logo.png")  # Update to your logo file path
+        self.logo = Image.open("Images\logo.png")  # Update to your logo file path
         self.logo = ImageTk.PhotoImage(self.logo.resize((300, 100)))
 
         # Create the button with a matching background color and slight border
