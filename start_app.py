@@ -43,7 +43,7 @@ class StartApp:
     
     def create_widgets(self):
         # Create frame
-        self.frame = tkinter.Frame(self.main_win.root, width=1000, height=500, bg='#F9EBEA')
+        self.frame = tkinter.Frame(self.main_win.root, width=1000, height=500, bg=self.main_win.bg)
         self.frame.pack(side='top')
         
         # Create widgets

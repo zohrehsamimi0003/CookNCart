@@ -8,13 +8,14 @@ class Table(tk.Frame):
     def __init__(self, session, parent, rows=7, columns=4):
         self.my_db = session.my_db
         self.session = session
+        self.recipe_ids = []
         tk.Frame.__init__(self, parent)
         
         breakfast_recipes = self.my_db.get_random_recipes("Breakfast", 7)
         lunch_recipes = self.my_db.get_random_recipes("Lunch", 7)
         dinner_recipes = self.my_db.get_random_recipes("Dinner", 7)
 
-        recipe_ids = self.get_recipe_ids(breakfast_recipes, lunch_recipes, dinner_recipes)
+        self.recipe_ids = self.get_recipe_ids(breakfast_recipes, lunch_recipes, dinner_recipes)
 
         # Column headings
         headings = ["", "Breakfast", "Lunch", "Dinner"]
@@ -71,20 +72,4 @@ class Table(tk.Frame):
 
     def get_recipe_ids(self, breakfast_list, lunch_list, dinner_list):
         first_elements = [t[0] for sublist in [breakfast_list, lunch_list, dinner_list] for t in sublist]
-        print(first_elements)        
-
-
-    def add_or_update_recipe(self, recipe_ids):
-        for recipe_id in recipe_ids:
-            recipe_ingredients = self.my_db.get_recipe_ingredients(recipe_id)
-            shop_ingredients = [{}] #I need this to be empty and populated in the conditional below.
-            #
-        if recipe_ingredients[0] in shop_ingredients:
-            '''# If the ingredient already exists for this recipe, update quantity if unit matches
-            if recipe_ingredients[2] == unit:
-                recipe_data[key]["Quantity"] += quantity
-            else:
-                print(f"Warning: Unit mismatch for ingredient '{ingredient}' in Recipe_id {recipe_id}.")
-        else:
-            # If the ingredient does not exist for this recipe, add it
-            recipe_data[key] = {"Quantity": quantity, "Unit": unit}'''
+        return first_elements

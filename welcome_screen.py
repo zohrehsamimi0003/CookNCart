@@ -54,7 +54,7 @@ class WelcomeScreen:
     
     def create_widgets(self):
         
-        self.frame = tkinter.Frame(self.main_win.root, width=1280, height=720, bg='#F9EBEA')
+        self.frame = tkinter.Frame(self.main_win.root, width=1280, height=720, bg=self.main_win.bg)
         self.frame.place(x=0, y=0)
         button_style = {
             'font': ("Algerian", 16),
@@ -64,7 +64,7 @@ class WelcomeScreen:
             'pady': 10,
             'width': 15,
             'relief': tkinter.RAISED,
-            'borderwidth': 6
+            'borderwidth': 2
         }
 
 
@@ -85,9 +85,9 @@ class WelcomeScreen:
         Search_recipe_label.grid(row=3, column=0, pady=20, padx=35, ipadx=50, ipady=20, sticky='w')
         Timed_recipe_label.grid(row=4, column=0, pady=20, padx=35, ipadx=50, ipady=20, sticky='w')
         # Create descriptive labels next to each button
-        description_label_mp = tkinter.Label(self.frame, text="Plan your meals for the week here.", bg='#F9EBEA', font=("Verdana", 12), justify='left', width=40)
-        description_label_sr = tkinter.Label(self.frame, text="Best match for your ingredients.", bg='#F9EBEA', font=("Verdana", 12), justify='left', width=40)
-        description_label_tr = tkinter.Label(self.frame, text="Let's cook for Lunch/Dinner?", bg='#F9EBEA', font=("Verdana", 12), justify='left', width=40)
+        description_label_mp = tkinter.Label(self.frame, text="Plan your meals for the week here.", bg=self.main_win.bg, font=("Verdana", 12), justify='left', width=40)
+        description_label_sr = tkinter.Label(self.frame, text="Best match for your ingredients.", bg=self.main_win.bg, font=("Verdana", 12), justify='left', width=40)
+        description_label_tr = tkinter.Label(self.frame, text="Let's cook for Lunch/Dinner?", bg=self.main_win.bg, font=("Verdana", 12), justify='left', width=40)
 
         
         log_off_button.grid(row=0, column=1, sticky="ne", padx=10, pady=(0,20), ipadx=20,ipady=10)
