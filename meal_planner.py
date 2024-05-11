@@ -20,7 +20,7 @@ class MealPlanner:
 
 
         CookNCart = tkinter.Button(
-            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
+            self.frame, text="CookNCart", command= self.back_button_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
         Log_off = tkinter.Button( self.frame, text="Log_off",bg='#F5B7B1', font=("Georgia", 11), command = self.log_off_btn_clicked)
         Profile = tkinter.Button( self.frame, text="Profile",bg='#F5B7B1', font=("Georgia", 11), command= self.profile_btn_clicked)
         Send=tkinter.Button(self.frame, text="Send",bg='#F5B7B1', font=("Georgia", 11), command=self.send)
@@ -79,3 +79,6 @@ class MealPlanner:
                     shopping_list[key] = Quantity
 
         return shopping_list
+    
+    def back_button_clicked(self):
+        helpers.back_to_welcome_screen(self.frame, self.session)

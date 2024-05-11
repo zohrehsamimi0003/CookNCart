@@ -2,6 +2,7 @@ import tkinter
 from tkinter import messagebox
 import database
 import helpers
+import welcome_screen
 
 class DisplayProfile:
     
@@ -16,7 +17,7 @@ class DisplayProfile:
         self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA')
 
         cook_n_cart = tkinter.Button(
-            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = helpers.cook_n_cart_clicked )
+            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = self.back_btn_clicked )
         name_label = tkinter.Label(
             self.frame, text="Name", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         self.name_var = tkinter.StringVar(value=self.user.name)
@@ -78,6 +79,9 @@ class DisplayProfile:
 
     def log_off_button_clicked(self):
         helpers.log_off_btn_screen_change(self.frame, self.session)
+
+    def back_btn_clicked(self):
+        helpers.back_to_welcome_screen(self.frame, self.session)
 
         
          

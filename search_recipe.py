@@ -24,8 +24,7 @@ class SearchRecipe:
 
 
     def back_btn_clicked(self):
-        helpers.clear_widgets(self.frame)
-        start_app.StartApp(self.session)
+        helpers.back_to_welcome_screen(self.frame, self.session)
 
     def search_btn_clicked(self):
         pass

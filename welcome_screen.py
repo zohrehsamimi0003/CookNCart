@@ -23,16 +23,17 @@ class WelcomeScreen:
        meal_planner.MealPlanner(self.session)
 
     def timed_recipe_button_clicked(self):
-        now = datetime.now()
+        '''now = datetime.now()
         current_time = now.time()   
         if current_time <= datetime.strptime('10:30', '%H:%M').time():
             period_of_day = "breakfast"
         elif current_time <= datetime.strptime('14:30', '%H:%M').time():
             period_of_day = "Lunch"
         else:
-            period_of_day = "Dinner"                  
-        helpers.clear_widgets(self.frame)            
-        timed_recipe.TimedRecipe(self.session, period_of_day)
+            period_of_day = "Dinner"
+         period_of_day)'''                  
+        helpers.clear_widgets(self.frame)
+        timed_recipe.TimedRecipe(self.session)
 
     def search_recipe_button_clicked(self):    
         helpers.clear_widgets(self.frame)

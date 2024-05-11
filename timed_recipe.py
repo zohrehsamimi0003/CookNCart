@@ -4,26 +4,33 @@ import helpers
 import database
 import start_app
 from PIL import Image, ImageTk
+from recipe import Recipe
+import welcome_screen
 
 
 class TimedRecipe:
     
-    def __init__(self, session, recipe_id):        
+    def __init__(self, session):        
         self.session = session
         self.main_win = session.main_win
         self.my_db = session.my_db
-        self.recipe_id = recipe_id
+        self.recipe = None
+        self.get_recipe()
+        self.shopping_list = {}
         self.create_widgets()
 
-    def log_off(self):
-        pass
-    def profile(self):
-        pass
+    def profile_button_clicked(self):
+        helpers.profile_btn_screen_change(self.frame, self.session)
 
+    def log_off_button_clicked(self):
+        helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def back_btn_clicked(self):
-        helpers.clear_widgets(self.frame)
-        start_app.StartApp(self.session)
+        helpers.back_to_welcome_screen(self.frame, self.session)
+
+    def get_recipe(self):
+        random_recipe = self.my_db.get_random_recipe()[0]
+        self.recipe = Recipe(random_recipe[0], random_recipe[1], random_recipe[2], random_recipe[3])
 
     def recipe_details(self):
         #recipe_window = tk.Toplevel(self.session.main_win.root)
@@ -33,7 +40,8 @@ class TimedRecipe:
         recipe_window.title("Recipe Image")
 
         # Load the image
-        image = Image.open("Images/ChopSuey.png")
+        #image = Image.open(self.recipe.recipe_details_path)
+        image = Image.open(self.recipe.recipe_details_path)
 
         # Create a PhotoImage object
         photo = ImageTk.PhotoImage(image)
@@ -46,26 +54,40 @@ class TimedRecipe:
         # Start the tkinter event loop for the new window
         recipe_window.mainloop()      
 
-    def Send(self):
-        pass
+    def send_button_clicked(self):
+        shopping_list = self.get_shopping_list()
+        helpers.create_shop_list_file(shopping_list, "random_recipe_list.txt")
+
+    def get_shopping_list(self):
+        recipe_ingredients = self.my_db.get_recipe_ingredients(self.recipe.recipe_id)
+        for Ingredient, Quantity, Unit in recipe_ingredients:
+            key = (Ingredient, Unit)
+            if key in self.shopping_list:
+                self.shopping_list[key] += Quantity
+            else:
+                self.shopping_list[key] = Quantity
+
+        return self.shopping_list
+    
+
 
     def create_widgets(self):    
 
         self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
         Recipe_title_label = tkinter.Label(
-            self.frame, text="       Recipe Title", bg='#AED6F1', font=("Georgia", 12), anchor="w")
+            self.frame, text=self.recipe.recipe_title, bg='#AED6F1', font=("Georgia", 12), anchor="w")
         recipe_details= tkinter.Button(
             self.frame, text="Recipe Details",bg='#8b5a2b', font=("Georgia", 12), command=self.recipe_details)
         send = tkinter.Button(
-            self.frame, text="send",bg='#8b5a2b', font=("Georgia", 12), command=self.Send)
+            self.frame, text="send",bg='#8b5a2b', font=("Georgia", 12), command=self.send_button_clicked)
         canvas =tkinter.Canvas(
             self.frame,width=500, height=400, bg="white"
         )
 
         Log_off_button = tkinter.Button(
-            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off)
+            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off_button_clicked)
         Profile_button = tkinter.Button(
-            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile)
+            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile_button_clicked)
         back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_btn_clicked,  borderwidth=1)
         
 

@@ -34,13 +34,16 @@ class Table(tk.Frame):
                     label = tk.Label(self, text=heading, relief="solid",font=("Comic Sans MS", 18))
                 elif j== 1:
                     self.recipe_id = breakfast_recipes[i][0]
-                    label = tk.Button(self, text=breakfast_recipes[i][1], command=self.recipe_btn_clicked, relief="solid", font=("Georgia", 12))
+                    details_url = breakfast_recipes[i][2]
+                    label = tk.Button(self, text=breakfast_recipes[i][1], command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid", font=("Georgia", 12))
                 elif j == 2:
-                    self.recipe_id = breakfast_recipes[i][0]
-                    label = tk.Button(self, text=lunch_recipes[i][1], command=self.recipe_btn_clicked, relief="solid",font= ("Georgia",12))
+                    self.recipe_id = lunch_recipes[i][0]
+                    details_url = lunch_recipes[i][2]
+                    label = tk.Button(self, text=lunch_recipes[i][1], command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
                 elif j == 3:
-                    self.recipe_id = breakfast_recipes[i][0]
-                    label = tk.Button(self, text=dinner_recipes[i][1], command=self.recipe_btn_clicked, relief="solid",font= ("Georgia",12))
+                    self.recipe_id = dinner_recipes[i][0]
+                    details_url = dinner_recipes[i][0]
+                    label = tk.Button(self, text=dinner_recipes[i][1], command=lambda url=self.recipe_id: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
                 else:
                     label = tk.Label(self, text="some recipe", relief="solid",font= ("Georgia",12))
                 label.grid(row=i+1, column=j, sticky="nsew",ipadx=10,ipady=10)
@@ -53,15 +56,15 @@ class Table(tk.Frame):
         for j in range(columns):
             self.grid_columnconfigure(j, weight=1)
         
-    def recipe_btn_clicked(self):
+    def recipe_btn_clicked(self, recipe_details_url):
         #recipe_window = tk.Toplevel(self.session.main_win.root)
         #timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
         # Create a new Toplevel window
+        print(recipe_details_url)
         recipe_window = tk.Toplevel(self.session.main_win.root)
         recipe_window.title("Recipe Image")
-
         # Load the image
-        image = Image.open("Images/ChopSuey.png")
+        image = Image.open(recipe_details_url)
 
         # Create a PhotoImage object
         photo = ImageTk.PhotoImage(image)

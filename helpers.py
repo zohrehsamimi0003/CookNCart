@@ -27,3 +27,27 @@ def cook_n_cart_clicked(self, created_user_obj):
     """Clear widgets and take user to welcome screen."""
     self.clear.widgets()
     welcome_screen.WelcomeScreen(self.main_win, created_user_obj)
+
+def back_to_welcome_screen(frame, session):
+    clear_widgets(frame)
+    welcome_screen.WelcomeScreen(session)
+
+
+def create_shop_list_file(shopping_list, file_name): #ZASKIA HANDLE THIS
+    
+    # Open the file in write mode
+    with open(file_name, 'w') as file:
+        # Write the title with increased font size
+        file.write("Shopping List\n\n")
+        
+        # Write the header row
+        file.write("Quantity".ljust(10) + "Ingredient\n\n")
+        
+        # Write each ingredient data
+        for (ingredient, unit), quantity in shopping_list.items():
+            amount = f"{quantity}{unit}"
+            if unit is None:
+                unit = ""
+                file.write(f"{quantity:<10}{ingredient}\n")
+            else:
+                file.write(f"{amount:<10}{ingredient}\n")

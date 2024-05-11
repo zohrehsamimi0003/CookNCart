@@ -17,7 +17,7 @@ class AccountCreation:
 
         self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
         cook_n_cart = tkinter.Button(
-            self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
+            self.frame, text="CookNCart", command= self.back_btn_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
         name_label = tkinter.Label(
             self.frame, text="Name", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         self.name_entry = tkinter.Entry(

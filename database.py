@@ -140,7 +140,7 @@ class Database:
 
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT RecipeId, RecipeTitle, Instructions, CookTime, ImageURL, MealTime, diet_types.DietType, Portions FROM recipes
+            query = '''SELECT RecipeId, RecipeTitle, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
                     INNER JOIN meal_times
                     ON recipes.MealTimeId = meal_times.MealTimeId
                     INNER JOIN diet_types
@@ -150,6 +150,27 @@ class Database:
                     LIMIT %s;'''            
             
             my_cursor.execute(query, (meal_time, number_of_recipes))
+            random_recipe = my_cursor.fetchall()
+            return random_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
+        
+            #SELECTS 1 OR MORE RANDOM RECIPE BASED ON LUNCH TYPE (USED FOR TIME OF DAY RECIPE)
+    def get_random_recipe(self): 
+        #implement a function in your code that decides if 
+        #its time for a random lunch/breankfast/dinner recipe
+        #pass strings lunch or dinner or breakfast (see main.py on my branch for logic i tested with)
+
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL FROM recipes
+                    INNER JOIN diet_types
+                    ON recipes.DietType = diet_types.DietTypeId
+                    ORDER BY RAND()
+                    LIMIT 1;'''            
+            
+            my_cursor.execute(query)
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
@@ -178,7 +199,19 @@ class Database:
             return ingredients
         except mysql.connector.Error as e:
             print(f"Database Error: {e}")
-            return False        
+            return False      
+          
+    def get_recipe_details_url(self, recipe_id):
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT DetailsURL FROM recipes WHERE RecipeId = %s '''            
+            
+            my_cursor.execute(query, (recipe_id,))
+            random_recipe = my_cursor.fetchall()
+            return random_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
 
 
     

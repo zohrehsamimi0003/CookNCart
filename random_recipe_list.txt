@@ -1,0 +1,10 @@
+Shopping List
+
+Quantity  Ingredient
+
+1         Bell pepper
+1         Mustard
+30ml      Olive oil
+5g        Salt
+100g      Carrot
+500g      Potatoes
