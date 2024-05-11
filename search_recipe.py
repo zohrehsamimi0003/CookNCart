@@ -1,56 +1,76 @@
 import tkinter
+from user import User
+from database import Database
+import welcome_screen
 import start_app
 import helpers
+from main_window import MainWindow
+from session import Session
+
 
 class SearchRecipe:
+
     def __init__(self, session):
         self.session = session
         self.main_win = session.main_win
-        self.my_db = session.my_db    
+        self.my_db = session.my_db
         self.create_widgets()
-
-    def create_widgets(self):
-        self.frame = tkinter.Frame(self.main_win.root, bg='#F9EBEA')
-
-        cookNcart = tkinter.Button(
-            self.frame, text="CookNCart", bg='#F5B7B1', font=("Comic Sans MS", 25), borderwidth=1, relief='solid')
-        No_of_people = tkinter.Label(
-            self.frame, text="No.of People", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
-        self.No_of_people_entry = tkinter.Entry(
-            self.frame, bg='#D2B4DE', font=("Georgia", 12))
-        Recipe_name = tkinter.Label(
-            self.frame, text="Recipe Name", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
-        self.Recipe_name_entry = tkinter.Entry(
-            self.frame, bg='#D2B4DE', font=("Georgia", 12))
-        List_of_ingredients = tkinter.Label(
-            self.frame, text=" List_of_ingredients", bg='#F5B7B1', font=("Georgia", 12), width=20, anchor="w")
-        self.List_of_ingredients_entry = tkinter.Entry(
-            self.frame, bg='#D2B4DE', font=("Georgia", 12))
-        log_off = tkinter.Button(self.frame, text="Log_off", bg='#F5B7B1',
-                                font=("Georgia", 11), command=self.log_off_button_clicked)
-        Profile = tkinter.Button(self.frame, text="Profile", bg='#F5B7B1',
-                                font=("Georgia", 11), command=self.profile_button_clicked)
-
-        cookNcart.grid(row=0, column=0, sticky="nw")
-        No_of_people.grid(row=1, column=0, sticky="e",
-                        ipadx=10, ipady=10, padx=10, pady=10)
-        self.No_of_people_entry.grid(
-            row=1, column=1, pady=20, ipadx=100, ipady=10)
-        Recipe_name.grid(row=2, column=0, sticky="e",
-                        ipadx=10, ipady=10, padx=10, pady=10)
-        self.Recipe_name_entry.grid(
-            row=2, column=1, pady=20, ipadx=100, ipady=10)
-        List_of_ingredients.grid(row=3, column=0, sticky="e",
-                                ipadx=10, ipady=10, padx=10, pady=10)
-        self.List_of_ingredients_entry.grid(
-            row=3, column=1, pady=20, ipadx=100, ipady=10)
-        log_off.grid(row=0, column=1, sticky="ne", padx=10, pady=20)
-        Profile.grid(row=0, column=2, sticky="ne", padx=10, pady=(20, 10))
-
-        self.frame.pack(fill=tkinter.BOTH, expand=True)
-
+    
     def profile_button_clicked(self):
         helpers.profile_btn_screen_change(self.frame, self.session)
 
     def log_off_button_clicked(self):
         helpers.log_off_btn_screen_change(self.frame, self.session)
+
+
+    def back_btn_clicked(self):
+        helpers.clear_widgets(self.frame)
+        start_app.StartApp(self.session)
+
+    def search_btn_clicked(self):
+        pass
+
+    def create_widgets(self):    
+
+        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
+        ingredients = tkinter.Label(
+            self.frame, text="  Ingredients :", bg='#AED6F1', font=("Georgia", 12), anchor="w")
+        ingredients_entry= tkinter.Entry(
+            self.frame,bg='#AED6F1', font=("Georgia", 12))
+        results = tkinter.Label(
+            self.frame, text="Results found :" , bg='#F9EBEA', font=("Georgia", 12), anchor="w")
+        Log_off_button = tkinter.Button(
+            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off_button_clicked)
+        Profile_button = tkinter.Button(
+            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile_button_clicked)
+        back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_btn_clicked,  borderwidth=1)
+        search_button = tkinter.Button(self.frame, text="Search", bg='#8b5a2b',font=("Georgia", 12), command=self.search_btn_clicked)
+
+        canvas =tkinter.Canvas(
+            self.frame,width=500, height=350, bg="white"
+        )
+
+        # Place widgets on screen
+        ingredients.grid(row=1,column=0,padx=(50,0),pady=(150,30),ipadx=10,ipady=13,sticky="w")
+        ingredients_entry.grid(row=1, column=0,padx=(10,20),pady=(150,30),ipadx=50,ipady=13)
+        search_button.grid(row=1,column=0, pady=(150,30),padx= (400,20) ,ipadx=20, ipady=8)
+
+        Log_off_button.grid(row=1,column=1, sticky="ne",padx=(10,50), pady=(10,5), ipadx=20, ipady=10)
+        Profile_button.grid(row=1,column=1, sticky="ne",padx=(0,175), pady=(10,5), ipadx=20, ipady=10)
+        back_button.grid(row=3, column=1, sticky="se", padx=(10,50),pady=(0,150), ipadx=20, ipady=10)
+        canvas.grid(row=3,column=0,padx=(150,0),pady=(0,150))
+        results.grid(row=2,column=0,padx=(50,100),sticky="w")
+
+
+        self.frame.columnconfigure(0, weight=1)
+        self.frame.columnconfigure(1, weight=1)
+        
+        
+        # Pack the frame
+        self.main_win.logo_label.lift()
+
+    
+        # Pack the frame
+        self.frame.pack(fill=tkinter.BOTH, expand=True, anchor='n', padx=0, pady=0)
+
+        self.main_win.root.mainloop()

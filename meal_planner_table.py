@@ -1,6 +1,7 @@
 import tkinter as tk
 import database
 import timed_recipe
+from PIL import Image, ImageTk
 
 class Table(tk.Frame):
 
@@ -51,23 +52,27 @@ class Table(tk.Frame):
             self.grid_rowconfigure(i, weight=1)
         for j in range(columns):
             self.grid_columnconfigure(j, weight=1)
-            
-        self.update_table()
-        
-    def update_table(self):
-        pass
-        '''# Fetch data from the database
-        #data = self.my_db.meal_planner_recipes()
-         # Implemented this method in Zaskia Database class
-
-        # Update table cells with fetched data
-        for i, row_data in enumerate(data):
-            for j, cell_data in enumerate(row_data):
-                self.cells[i][j].configure(text=cell_data)    '''    
         
     def recipe_btn_clicked(self):
+        #recipe_window = tk.Toplevel(self.session.main_win.root)
+        #timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
+        # Create a new Toplevel window
         recipe_window = tk.Toplevel(self.session.main_win.root)
-        timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
+        recipe_window.title("Recipe Image")
+
+        # Load the image
+        image = Image.open("Images/ChopSuey.png")
+
+        # Create a PhotoImage object
+        photo = ImageTk.PhotoImage(image)
+
+        # Display the image in a label
+        label = tk.Label(recipe_window, image=photo)
+        label.image = photo  # This line keeps a reference to the image, preventing it from being garbage collected
+        label.pack()
+
+        # Start the tkinter event loop for the new window
+        recipe_window.mainloop()        
 
 
     def get_recipe_ids(self, breakfast_list, lunch_list, dinner_list):

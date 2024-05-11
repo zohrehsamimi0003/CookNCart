@@ -26,7 +26,25 @@ class TimedRecipe:
         start_app.StartApp(self.session)
 
     def recipe_details(self):
-        pass
+        #recipe_window = tk.Toplevel(self.session.main_win.root)
+        #timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
+        # Create a new Toplevel window
+        recipe_window = tkinter.Toplevel(self.session.main_win.root)
+        recipe_window.title("Recipe Image")
+
+        # Load the image
+        image = Image.open("Images/ChopSuey.png")
+
+        # Create a PhotoImage object
+        photo = ImageTk.PhotoImage(image)
+
+        # Display the image in a label
+        label = tkinter.Label(recipe_window, image=photo)
+        label.image = photo  # This line keeps a reference to the image, preventing it from being garbage collected
+        label.pack()
+
+        # Start the tkinter event loop for the new window
+        recipe_window.mainloop()      
 
     def Send(self):
         pass
@@ -65,6 +83,20 @@ class TimedRecipe:
 
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=1)
+
+        #ChatGPTCODE
+
+            # Load the image
+        image = Image.open("Images/RecipeImage.png")  # Change path to your image file
+        tk_image = ImageTk.PhotoImage(image)
+        
+        # Display the image on the canvas
+        canvas.create_image(0, 0, anchor="nw", image=tk_image)
+
+        # Keep a reference to the image to prevent it from being garbage collected
+        canvas.image = tk_image
+
+        #ChatGPTCODE
         
         
         # Pack the frame
