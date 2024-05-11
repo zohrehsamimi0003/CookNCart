@@ -26,15 +26,13 @@ class WelcomeScreen:
         now = datetime.now()
         current_time = now.time()   
         if current_time <= datetime.strptime('10:30', '%H:%M').time():
-            time_of_day = "breakfast"
-            timed_recipe.TimedRecipe(self.session)
+            period_of_day = "breakfast"
         elif current_time <= datetime.strptime('14:30', '%H:%M').time():
-            time_of_day = "Lunch"
-            timed_recipe.TimedRecipe(self.session)
+            period_of_day = "Lunch"
         else:
-            time_of_day = "Dinner"            
-            timed_recipe.TimedRecipe(self.session)                  
-        helpers.clear_widgets(self.frame)
+            period_of_day = "Dinner"                  
+        helpers.clear_widgets(self.frame)            
+        timed_recipe.TimedRecipe(self.session, period_of_day)
 
     def search_recipe_button_clicked(self):    
         helpers.clear_widgets(self.frame)

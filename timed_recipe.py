@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as tkinter
 import main_window
 import helpers
 import database
@@ -8,17 +8,117 @@ from PIL import Image, ImageTk
 
 class TimedRecipe:
     
-    def __init__(self, session, window, recipe_id):        
+    def __init__(self, session, recipe_id):        
         self.session = session
-        #self.main_win = session.main_win
-        self.window = window
-        #self.user = user
+        self.main_win = session.main_win
         self.my_db = session.my_db
         self.recipe_id = recipe_id
         self.create_widgets()
 
-    def create_widgets(self):
-        self.frame = tk.Frame(self.window, bg='#F9EBEA')
+    def log_off(self):
+        pass
+    def profile(self):
+        pass
+
+
+    def back_btn_clicked(self):
+        helpers.clear_widgets(self.frame)
+        start_app.StartApp(self.session)
+
+    def recipe_details(self):
+        #recipe_window = tk.Toplevel(self.session.main_win.root)
+        #timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
+        # Create a new Toplevel window
+        recipe_window = tkinter.Toplevel(self.session.main_win.root)
+        recipe_window.title("Recipe Image")
+
+        # Load the image
+        image = Image.open("Images/ChopSuey.png")
+
+        # Create a PhotoImage object
+        photo = ImageTk.PhotoImage(image)
+
+        # Display the image in a label
+        label = tkinter.Label(recipe_window, image=photo)
+        label.image = photo  # This line keeps a reference to the image, preventing it from being garbage collected
+        label.pack()
+
+        # Start the tkinter event loop for the new window
+        recipe_window.mainloop()      
+
+    def Send(self):
+        pass
+
+    def create_widgets(self):    
+
+        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
+        Recipe_title_label = tkinter.Label(
+            self.frame, text="       Recipe Title", bg='#AED6F1', font=("Georgia", 12), anchor="w")
+        recipe_details= tkinter.Button(
+            self.frame, text="Recipe Details",bg='#8b5a2b', font=("Georgia", 12), command=self.recipe_details)
+        send = tkinter.Button(
+            self.frame, text="send",bg='#8b5a2b', font=("Georgia", 12), command=self.Send)
+        canvas =tkinter.Canvas(
+            self.frame,width=500, height=400, bg="white"
+        )
+
+        Log_off_button = tkinter.Button(
+            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off)
+        Profile_button = tkinter.Button(
+            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile)
+        back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_btn_clicked,  borderwidth=1)
+        
+
+        # Place widgets on screen
+        Recipe_title_label.grid(row=1,column=0,padx=(50,350),pady=(150,30),ipadx=10,ipady=10)
+        recipe_details.grid(row=2,column=2,pady=(0,150),ipadx=10,ipady=12)
+        send.grid(row=2,column=2,padx=20,ipadx=42,ipady=10)
+        canvas.grid(row=2,column=0,padx=(50,100),pady=(0,100))
+
+        Log_off_button.grid(row=1,column=3, sticky="ne",padx=(10,50), pady=(10,5), ipadx=20, ipady=10)
+        Profile_button.grid(row=1,column=3, sticky="ne",padx=(0,175), pady=(10,5), ipadx=20, ipady=10)
+        back_button.grid(row=2, column=3, sticky="se", padx=(10,50),pady=(0,100),  ipadx=20, ipady=10)
+        
+
+
+        self.frame.columnconfigure(0, weight=1)
+        self.frame.columnconfigure(1, weight=1)
+
+        #ChatGPTCODE
+
+            # Load the image
+        image = Image.open("Images/RecipeImage.png")  # Change path to your image file
+        tk_image = ImageTk.PhotoImage(image)
+        
+        # Display the image on the canvas
+        canvas.create_image(0, 0, anchor="nw", image=tk_image)
+
+        # Keep a reference to the image to prevent it from being garbage collected
+        canvas.image = tk_image
+
+        #ChatGPTCODE
+        
+        
+        # Pack the frame
+        self.main_win.logo_label.lift()
+
+    
+        # Pack the frame
+        self.frame.pack(fill=tkinter.BOTH, expand=True, anchor='n', padx=0, pady=0)
+
+        self.main_win.root.mainloop()
+
+
+
+
+
+
+
+
+
+
+    '''def create_widgets(self):
+        self.frame = tk.Frame(self.main_win.root, bg='#F9EBEA')
 
         cook_n_cart = tk.Button(self.frame, text="CookNCart", bg='#D2B4DE', font=("Comic Sans MS", 25), borderwidth=1, relief='solid')
         log_off_button = tk.Button(self.frame, text="Log_off", bg='#F5B7B1', font=("Georgia", 11), command=self.log_off_button_clicked)
@@ -69,4 +169,4 @@ class TimedRecipe:
         helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def send_button_clicked(self):
-        pass
+        pass'''

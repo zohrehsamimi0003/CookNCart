@@ -8,19 +8,22 @@ from main_window import MainWindow
 from session import Session
 
 
-class SearchRecipe:
+class Search_recipe1:
 
     def __init__(self, session):
+        my_db = Database() 
+        root = tkinter.Tk()
+        main_win = MainWindow(root)
+        session = Session(main_win, my_db)
         self.session = session
         self.main_win = session.main_win
         self.my_db = session.my_db
         self.create_widgets()
     
-    def profile_button_clicked(self):
-        helpers.profile_btn_screen_change(self.frame, self.session)
-
-    def log_off_button_clicked(self):
-        helpers.log_off_btn_screen_change(self.frame, self.session)
+    def log_off(self):
+        pass
+    def profile(self):
+        pass
 
 
     def back_btn_clicked(self):
@@ -40,9 +43,9 @@ class SearchRecipe:
         results = tkinter.Label(
             self.frame, text="Results found :" , bg='#F9EBEA', font=("Georgia", 12), anchor="w")
         Log_off_button = tkinter.Button(
-            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off_button_clicked)
+            self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off)
         Profile_button = tkinter.Button(
-            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile_button_clicked)
+            self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile)
         back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_btn_clicked,  borderwidth=1)
         search_button = tkinter.Button(self.frame, text="Search", bg='#8b5a2b',font=("Georgia", 12), command=self.search_btn_clicked)
 
@@ -74,3 +77,7 @@ class SearchRecipe:
         self.frame.pack(fill=tkinter.BOTH, expand=True, anchor='n', padx=0, pady=0)
 
         self.main_win.root.mainloop()
+    
+
+# Create an instance of Timed_recipe1 and let its __init__ method create widgets
+search_recipe_instance = Search_recipe1(Session)
