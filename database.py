@@ -14,7 +14,7 @@ class Database:
     def login_validation(self, mail, pwd):
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT UserName, UserPassword, EMail, DietType FROM users
+            query = '''SELECT UserId, UserName, UserPassword, EMail, DietType FROM users
              JOIN diet_types ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s AND UserPassword = %s'''
             my_cursor.execute(query, (mail, pwd))
             user = my_cursor.fetchone()
@@ -28,7 +28,7 @@ class Database:
     def check_if_user_exists(self, email):
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT UserName, UserPassword, EMail, DietType FROM users
+            query = '''SELECT UserId, UserName, UserPassword, EMail, DietType FROM users
              JOIN diet_types ON users.DietTypeId = diet_types.DietTypeId WHERE Email = %s'''
             my_cursor.execute(query, (email,))
             user = my_cursor.fetchone()
@@ -213,6 +213,62 @@ class Database:
             print(f"Database Error: {e}")
             return False
 
+    #INSERTS A USER BEING CREATED INTO THE DATABASE    
+    def insert_meal_plan(self, user_id, recipe_ids): 
+    
+        try:
+            my_cursor = self.conn.cursor()
 
+            
+            # Then, insert the user with the obtained DietTypeId
+            insert_query = '''INSERT INTO user_meal_plans (UserId, DateCreated) VALUES(%s , NOW());'''
+            my_cursor.execute(insert_query, (user_id,))
+
+            # Finally, commit the transaction
+            self.conn.commit()
+            #rowcount = my_cursor.rowcount
+            
+            # First, execute the SELECT statement
+            select_query = "SELECT LAST_INSERT_ID();"
+            my_cursor.execute(select_query)
+            meal_plan_id = my_cursor.fetchone()[0]
+            for recipe_id in recipe_ids:
+                select_query="INSERT INTO meal_plan_recipes (MealPlanID, RecipeId) VALUES(%s, %s)"
+                my_cursor.execute(select_query, (meal_plan_id, recipe_id))
+                self.conn.commit()
+            my_cursor.close()
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+
+    def get_meal_plan_id(self, user_id):
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT MealPlanId FROM user_meal_plans 
+            WHERE UserId = %s ORDER BY DateCreated DESC
+            LIMIT 1;'''
+            my_cursor.execute(query, (user_id,))
+            random_recipe = my_cursor.fetchone()
+            return random_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
+        
+    def get_meal_plan_recipe_ids(self, meal_plan_id, meal_time):
+        try:
+            my_cursor = self.conn.cursor()
+            query = '''SELECT meal_plan_recipes.RecipeId,  RecipeTitle, ImageURL, DetailsURL FROM meal_plan_recipes
+                    JOIN recipes ON  meal_plan_recipes.RecipeId = recipes.RecipeId
+                    JOIN meal_times ON meal_times.MealTimeId = recipes.MealTimeId 
+                    WHERE MealTime = %s AND MealPlanId = %s
+                    ORDER BY meal_plan_recipes.insertion_timestamp;'''           
+            
+            my_cursor.execute(query, (meal_time, meal_plan_id))
+            random_recipe = my_cursor.fetchall()
+            return random_recipe 
+        except mysql.connector.Error as e:
+            print(f"Database Error: {e}")
+            return False
+
+            
     
     

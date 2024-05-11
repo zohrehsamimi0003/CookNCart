@@ -20,11 +20,11 @@ class MealPlanner:
 
 
         CookNCart = tkinter.Button(
-            self.frame, text="CookNCart", command= self.back_button_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
+            self.frame, text="CookNCart", command= self.get_new_meal_planner, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
         Log_off = tkinter.Button( self.frame, text="Log_off",bg='#F5B7B1', font=("Georgia", 11), command = self.log_off_btn_clicked)
         Profile = tkinter.Button( self.frame, text="Profile",bg='#F5B7B1', font=("Georgia", 11), command= self.profile_btn_clicked)
         Send=tkinter.Button(self.frame, text="Send",bg='#F5B7B1', font=("Georgia", 11), command=self.send)
-        self.table = Table( self.session, self.frame)
+        self.table = Table( self.session, self.frame, is_new_meal_plan=False)
 
         CookNCart.grid(row=0, column=0, columnspan=3, sticky="nw",padx=20, pady=20) 
         Log_off.grid(row=0, column=1, sticky="ne", padx=10, pady=20)
@@ -45,7 +45,11 @@ class MealPlanner:
     def log_off_btn_clicked(self):
         helpers.log_off_btn_screen_change(self.frame, self.session)
     
-    def send(self): #ZASKIA HANDLE THIS
+    def send(self): 
+        self.save_meal_plan()
+
+
+        #SENDS SHOPPING LIST
         shopping_list = self.get_shopping_list()
         
         # Open the file in write mode
@@ -65,6 +69,16 @@ class MealPlanner:
                 else:
                     file.write(f"{amount:<10}{ingredient}\n")
 
+    def save_meal_plan(self):
+        self.session.user.meal_plan.breakfast_recipes = self.table.breakfast_recipes
+        self.session.user.meal_plan.lunch_recipes = self.table.lunch_recipes
+        self.session.user.meal_plan.dinner_recipes = self.table.dinner_recipes
+
+        #recipes = self.table.breakfast_recipes + self.table.lunch_recipes + self.table.dinner_recipes
+
+        self.my_db.insert_meal_plan(self.session.user.user_id, self.table.recipe_ids)
+
+
     
 
     def get_shopping_list(self):
@@ -82,3 +96,10 @@ class MealPlanner:
     
     def back_button_clicked(self):
         helpers.back_to_welcome_screen(self.frame, self.session)
+
+    def get_new_meal_planner(self):
+        self.table.destroy()
+        self.table = Table(self.session, self.frame, is_new_meal_plan = True)
+        
+        self.table.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+

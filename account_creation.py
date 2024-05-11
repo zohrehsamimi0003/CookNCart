@@ -80,7 +80,6 @@ class AccountCreation:
             name = self.name_entry.get()
             pwd = self.password_entry.get()
             meal = self.selected_diet_type.get().strip("(),'")
-            print(type(meal))
             rowcount = self.my_db.insert_user(name, mail, pwd, meal)
             if rowcount == 1:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")

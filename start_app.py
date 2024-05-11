@@ -32,7 +32,8 @@ class StartApp:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
             tkinter.messagebox.showinfo("Success", "Login successful!")
-            self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3])
+            self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3], user_found[4])
+            self.set_meal_plans()
             helpers.clear_widgets(self.frame)
             welcome_screen.WelcomeScreen(self.session)  
                        
@@ -72,3 +73,9 @@ class StartApp:
         self.password_entry.grid(row=2, column=2, pady=20)  
         login_button.grid(row=4, column=0, columnspan=2, pady=30)
         create_account_button.grid(row=4, column=1, columnspan=2, pady=30)
+
+    def set_meal_plans(self):
+        meal_plan_id = self.my_db.get_meal_plan_id(self.session.user.user_id)[0]
+        self.session.user.meal_plan.breakfast_recipes = self.my_db.get_meal_plan_recipe_ids(meal_plan_id, "breakfast")
+        self.session.user.meal_plan.lunch_recipes = self.my_db.get_meal_plan_recipe_ids(meal_plan_id, "lunch")
+        self.session.user.meal_plan.dinner_recipes = self.my_db.get_meal_plan_recipe_ids(meal_plan_id, "dinner")
