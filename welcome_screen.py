@@ -1,7 +1,7 @@
 
 import tkinter 
 import meal_planner
-import timed_recipe
+import random_recipe
 import search_recipe
 import helpers
 import start_app
@@ -15,14 +15,14 @@ class WelcomeScreen:
         self.main_win = session.main_win
         self.my_db = session.my_db
         self.create_widgets()
-         
-
     
     def meal_planner_button_clicked(self):
-       self.frame.destroy()
+       '''Go to meal planner page.'''
+       helpers.clear_widgets(self.frame)
        meal_planner.MealPlanner(self.session)
 
-    def timed_recipe_button_clicked(self):
+    def random_recipe_button_clicked(self):
+        '''Go to random recipe page.'''
         '''now = datetime.now()
         current_time = now.time()   
         if current_time <= datetime.strptime('10:30', '%H:%M').time():
@@ -33,23 +33,20 @@ class WelcomeScreen:
             period_of_day = "Dinner"
          period_of_day)'''                  
         helpers.clear_widgets(self.frame)
-        timed_recipe.TimedRecipe(self.session)
+        random_recipe.RandomRecipe(self.session)
 
-    def search_recipe_button_clicked(self):    
+    def search_recipe_button_clicked(self):
+        '''Go to search recipe page.'''
         helpers.clear_widgets(self.frame)
         search_recipe.SearchRecipe(self.session)
-    
-    def back_btn_clicked(self):
-        helpers.clear_widgets(self.frame)
-        start_app.StartApp(self.session)
 
     def profile_button_clicked(self):
+        '''Go to profile page.'''
         helpers.profile_btn_screen_change(self.frame, self.session)
 
     def log_off_button_clicked(self):
+        '''Log off acount and go to login page.'''
         helpers.log_off_btn_screen_change(self.frame, self.session)
-    def back_button_clicked(self):
-        pass
     
     def create_widgets(self):
         
@@ -71,18 +68,17 @@ class WelcomeScreen:
             self.frame, text="Meal Planner", **button_style, command=self.meal_planner_button_clicked)
         Search_recipe_label = tkinter.Button(
             self.frame, text="Search Recipe", **button_style, command=self.search_recipe_button_clicked)
-        Timed_recipe_label = tkinter.Button(
-            self.frame, text="Timed Recipe", **button_style, command=self.timed_recipe_button_clicked)
+        Random_recipe_label = tkinter.Button(
+            self.frame, text="Random Recipe", **button_style, command=self.random_recipe_button_clicked)
         log_off_button = tkinter.Button(
             self.frame, text="Log Off", bg='#8b5a2b',fg='white', font=("Georgia", 11), borderwidth=1,command=self.log_off_button_clicked)
         profile_button = tkinter.Button(
             self.frame, text="Profile", bg='#8b5a2b',fg='white', font=("Georgia", 11), borderwidth=1, command=self.profile_button_clicked)
-        back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b', fg='white', command=self.back_button_clicked,  borderwidth=1)
 
         # Position the buttons and labels
         Meal_planner_label.grid(row=2, column=0, pady=(100,20), padx=35, ipadx=50, ipady=20, sticky='w')
         Search_recipe_label.grid(row=3, column=0, pady=20, padx=35, ipadx=50, ipady=20, sticky='w')
-        Timed_recipe_label.grid(row=4, column=0, pady=20, padx=35, ipadx=50, ipady=20, sticky='w')
+        Random_recipe_label.grid(row=4, column=0, pady=20, padx=35, ipadx=50, ipady=20, sticky='w')
         # Create descriptive labels next to each button
         description_label_mp = tkinter.Label(self.frame, text="Plan your meals for the week here.", bg=self.main_win.bg, font=("Verdana", 12), justify='left', width=40)
         description_label_sr = tkinter.Label(self.frame, text="Best match for your ingredients.", bg=self.main_win.bg, font=("Verdana", 12), justify='left', width=40)
@@ -91,7 +87,6 @@ class WelcomeScreen:
         
         log_off_button.grid(row=0, column=1, sticky="ne", padx=10, pady=(0,20), ipadx=20,ipady=10)
         profile_button.grid(row=0, column=2, sticky="ne", padx=10, pady=(0,20), ipadx=20, ipady=10)
-        back_button.grid(row=5, column=2, sticky="se", padx=10, pady=(0,20), ipadx=20, ipady=10)
         description_label_mp.grid(row=2, column=1, padx=10, pady=(10,20), sticky='w')
         description_label_sr.grid(row=3, column=1, padx=10, pady=20, sticky='w')
         description_label_tr.grid(row=4, column=1, padx=10, pady=20, sticky='w')

@@ -8,7 +8,7 @@ from recipe import Recipe
 import welcome_screen
 
 
-class TimedRecipe:
+class RandomRecipe:
     
     def __init__(self, session):        
         self.session = session
@@ -20,32 +20,31 @@ class TimedRecipe:
         self.create_widgets()
 
     def profile_button_clicked(self):
+        '''Go to profile page.'''
         helpers.profile_btn_screen_change(self.frame, self.session)
 
     def log_off_button_clicked(self):
+        '''Log off acount and go to login page.'''
         helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def back_btn_clicked(self):
+        '''Go to welcome page'''
         helpers.back_to_welcome_screen(self.frame, self.session)
 
     def get_recipe(self):
+        '''Get and set random recipe details.'''
         random_recipe = self.session.my_db.get_random_recipe()[0]
         self.recipe = Recipe(random_recipe[0], random_recipe[1], random_recipe[2], random_recipe[3])
 
     def recipe_details(self):
-        #recipe_window = tk.Toplevel(self.session.main_win.root)
-        #timed_recipe.TimedRecipe(self.session, recipe_window, self.recipe_id)
-        # Create a new Toplevel window
+        '''Display recipe detail picture in a pop up window.'''
         recipe_window = tkinter.Toplevel(self.session.main_win.root)
         recipe_window.title("Recipe Image")
 
         # Load the image
-        #image = Image.open(self.recipe.recipe_details_path)
         image = Image.open(self.recipe.recipe_details_path)
-
         # Create a PhotoImage object
         photo = ImageTk.PhotoImage(image)
-
         # Display the image in a label
         label = tkinter.Label(recipe_window, image=photo)
         label.image = photo  # This line keeps a reference to the image, preventing it from being garbage collected
@@ -55,12 +54,12 @@ class TimedRecipe:
         recipe_window.mainloop()      
 
     def send_button_clicked(self):
-        recipe_ingredients = self.session.my_db.get_recipe_ingredients(self.recipe.recipe_id)
+        '''Create a text file with the shopping list for one recipe.'''
+        recipe_ingredients = self.session.my_db.get_recipe_ingredients(self.recipe.recipe_id)      
+        # Creates the list that must be saved to the text file
         shopping_list = helpers.create_shop_list(recipe_ingredients)
+        # Writes the text file
         helpers.create_shop_list_file(shopping_list, "random_recipe_list.txt")
-
-    
-
 
     def create_widgets(self):    
 
@@ -97,19 +96,13 @@ class TimedRecipe:
         self.frame.columnconfigure(0, weight=1)
         self.frame.columnconfigure(1, weight=1)
 
-        #ChatGPTCODE
-
-            # Load the image
+        # Load the image
         image = Image.open(self.recipe.recipe_img_path)  # Change path to your image file
         tk_image = ImageTk.PhotoImage(image)
-        
         # Display the image on the canvas
         canvas.create_image(0, 0, anchor="nw", image=tk_image)
-
         # Keep a reference to the image to prevent it from being garbage collected
         canvas.image = tk_image
-
-        #ChatGPTCODE
         
         
         # Pack the frame

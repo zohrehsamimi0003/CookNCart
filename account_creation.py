@@ -9,9 +9,10 @@ class AccountCreation:
 
     def __init__(self, session):
         self.session = session
+        self.diet_types = self.session.my_db.get_diet_types()
         self.create_widgets()
     
-    def create_widgets(self):    
+    def create_widgets(self):
 
         self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA', width=500,height=500)
         cook_n_cart = tkinter.Button(
@@ -29,19 +30,15 @@ class AccountCreation:
         self.password_entry= tkinter.Entry(
             self.frame,bg='#D2B4DE' , font=("Georgia", 12))
         
-        #CHNGED MEAL_PREFERENCE TO DIET_TYPE TO MATCH DATABASE
-        #CHANGED THE ENTRY BOX TO A DROPBOX EDIT AS YOU WISH BUT LEAVE THE NAMES AS IS
-        diet_types = self.session.my_db.get_diet_types()
+        # Create drop down list and set the default selected
         self.selected_diet_type = tkinter.StringVar(self.frame)
-        self.selected_diet_type.set(diet_types[0])
+        self.selected_diet_type.set(self.diet_types[0])
         diet_type = tkinter.Label(
             self.frame, text="Diet Type", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
         self.diet_type_option= tkinter.OptionMenu(
-            self.frame, self.selected_diet_type, *diet_types)
+            self.frame, self.selected_diet_type, *self.diet_types)
         self.diet_type_option.config(bg='#D2B4DE', font=("Georgia", 12), width=15)
-        #END OF THE CHANGES I MADE TO TKINTER
         
-
 
         create_account_button = tkinter.Button(
             self.frame, text="Create",bg='#F5B7B1', font=("Georgia", 12), command=self.create_button_clicked)
@@ -66,21 +63,21 @@ class AccountCreation:
         
         
     def create_button_clicked(self):
-        """Check for duplicate user based on email."""
+        """Check if user exists and call method to create user."""
         mail = self.email_entry.get()
-        found_user = self.session.my_db.check_if_user_exists(mail) #duplicacy check based on email. currently we are doing
+        found_user = self.session.my_db.check_if_user_exists(mail)
         self.handle_user_creation(found_user, mail)
         
     def handle_user_creation(self, found_user, mail):
-        """Handles user creation, creation of user object
-           and take the user to welcom screen."""
+        """Handle user creation, creation of user object
+           and take user to welcome screen."""
         if found_user is None:
             name = self.name_entry.get()
             pwd = self.password_entry.get()
             meal = self.selected_diet_type.get().strip("(),'")
+            # try to insert user and return user_id as int
             user_id = self.session.my_db.insert_user(name, mail, pwd, meal)
             if user_id is not None:
-                tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
                 self.session.user = User(user_id, name, pwd, mail, meal)
                 helpers.clear_widgets(self.frame)
                 welcome_screen.WelcomeScreen(self.session)    
@@ -92,5 +89,6 @@ class AccountCreation:
             tkinter.messagebox.showerror("Error","User already exist.")
 
     def back_btn_clicked(self):
+        '''Back to the login page.'''
         helpers.clear_widgets(self.frame)
         start_app.StartApp(self.session)

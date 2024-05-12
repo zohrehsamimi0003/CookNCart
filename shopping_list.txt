@@ -2,24 +2,24 @@ Shopping List
 
 Quantity  Ingredient
 
-10        Garlic clove
-4         Mustard
-5g        Ground Pepper
-500g      Green beans
-600g      Mushrooms
-650g      Tomatoes
-4         Bell pepper
-500g      Red onion
+5         Bell pepper
+550g      Red onion
 230ml     Olive oil
-35g       Salt
-550g      Cauliflower
-2         Eggplant
-1100ml    Cooking cream
+40g       Salt
+750g      Cauliflower
+900g      Tomatoes
+12        Garlic clove
+1000ml    Cooking cream
 500g      Cabbage
-100g      Broccoli
 110ml     Cooking oil
 2100g     Potatoes
-125ml     Pesto
+4         Mustard
+5g        Ground Pepper
+350g      Green beans
+500g      Mushrooms
+100ml     Pesto
+30g       Ginger
+4         Eggplant
+100g      Broccoli
 2         Vegetarian stock cube
-300g      Carrot
-20g       Ginger
+400g      Carrot

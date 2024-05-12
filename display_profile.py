@@ -10,7 +10,8 @@ class DisplayProfile:
         self.session = session
         self.create_widgets()
     
-    def create_widgets(self):    
+    def create_widgets(self):
+        '''Display the tkinter profile page.'''
         self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA')
 
         cook_n_cart = tkinter.Button(
@@ -61,23 +62,26 @@ class DisplayProfile:
         new_password = self.password_var.get()
         new_diet_type = self.meal_pre_var.get()
 
-        # Update database and user object with new values. 
+        # Update database with new values
         rowcount = self.session.my_db.update_user(self.session.user.email, new_name, new_password, new_diet_type)
+        # If successful update user object 
         if rowcount == 1:
             self.session.user.update_user_data(new_name, new_password, new_diet_type)
             tkinter.messagebox.showinfo("Update", "Data updated successfully!")
-            #helpers.cook_n_cart_clicked(self.session)
         else:
             tkinter.messagebox.showerror("Database Connection Error. Please try again.")
 
 
     def profile_button_clicked(self):
+        '''Go to profile page.'''
         helpers.profile_btn_screen_change(self.frame, self.session)
 
     def log_off_button_clicked(self):
+        '''Log off acount and go to login page.'''
         helpers.log_off_btn_screen_change(self.frame, self.session)
 
     def back_btn_clicked(self):
+        '''Go to welcome page'''
         helpers.back_to_welcome_screen(self.frame, self.session)
 
         

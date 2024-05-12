@@ -2,7 +2,7 @@ import tkinter
 from PIL import Image, ImageTk
 
 class MainWindow():
-    """Creates the main window for all screens that appear throughout the application"""
+    """Create the main window for all screens that appear throughout the application."""
 
     def __init__(self, root):
         self.root = root

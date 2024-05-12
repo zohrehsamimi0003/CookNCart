@@ -13,7 +13,7 @@ class User:
         self.meal_plan = MealPlan()
     
     def update_user_data(self, new_name, new_password, new_diet_type):
-        """Updates the user information if user want to update."""
+        """Update the user information if user want to update."""
         self.name = new_name
         self.password = new_password
         self.diet_type = new_diet_type

@@ -2,3 +2,9 @@ Shopping List
 
 Quantity  Ingredient
 
+2         Garlic clove
+1         Mustard
+5g        Ground Pepper
+150g      Green beans
+100g      Mushrooms
+200g      Tomatoes

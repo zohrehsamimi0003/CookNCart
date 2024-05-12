@@ -1,10 +1,9 @@
 import display_profile
 import welcome_screen
 import start_app
-import timed_recipe
+import random_recipe
 
-"""This module deals with clear widget, exit the application 
-    & switches the screen."""
+"""Helper functions."""
     
 def clear_widgets(frame):
     """Clear widgets from main window and switch screen."""
@@ -12,7 +11,7 @@ def clear_widgets(frame):
 
 
 def log_off_btn_screen_change(frame, session):
-    """Logs user out of application and returns to log in page (start_app)"""
+    """Log user out of application and returns to log in page (start_app)"""
     clear_widgets(frame)
     session.user = None
     start_app.StartApp(session)
@@ -23,17 +22,20 @@ def profile_btn_screen_change(frame, session):
     clear_widgets(frame)
     display_profile.DisplayProfile(session)
               
-def cook_n_cart_clicked(self, created_user_obj):
+'''def cook_n_cart_clicked(self, created_user_obj):
     """Clear widgets and take user to welcome screen."""
     self.clear.widgets()
-    welcome_screen.WelcomeScreen(self.main_win, created_user_obj)
+    welcome_screen.WelcomeScreen(self.main_win, created_user_obj)'''
 
 def back_to_welcome_screen(frame, session):
+    '''Change screen to welcome screen.'''
     clear_widgets(frame)
     welcome_screen.WelcomeScreen(session)
 
 def create_shop_list(recipe_ingredients):
+    '''Add ingredients to create a list with unique ingredient, quantity.'''
     shopping_list = {} 
+    # Pair Ingredient, Unit to add the same type of ingredient to each other
     for Ingredient, Quantity, Unit in recipe_ingredients:
         key = (Ingredient, Unit)
         if key in shopping_list:
@@ -44,16 +46,12 @@ def create_shop_list(recipe_ingredients):
     return shopping_list
 
 def create_shop_list_file(shopping_list, file_name): 
-    
-    # Open the file in write mode
+    '''Generate a text file and display shopping list.'''
     with open(file_name, 'w') as file:
-        # Write the title with increased font size
         file.write("Shopping List\n\n")
-        
-        # Write the header row
         file.write("Quantity".ljust(10) + "Ingredient\n\n")
         
-        # Write each ingredient data
+        # Write each quantity, unit and ingredient on a new line
         for (ingredient, unit), quantity in shopping_list.items():
             amount = f"{quantity}{unit}"
             if unit is None:

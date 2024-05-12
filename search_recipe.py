@@ -15,16 +15,18 @@ class SearchRecipe:
         self.create_widgets()
     
     def profile_button_clicked(self):
+        '''Go to profile page.'''
         helpers.profile_btn_screen_change(self.frame, self.session)
 
     def log_off_button_clicked(self):
+        '''Log off acount and go to login page.'''
         helpers.log_off_btn_screen_change(self.frame, self.session)
 
-
-    def back_btn_clicked(self):
+    def back_button_clicked(self):
+        '''Go to welcome page'''
         helpers.back_to_welcome_screen(self.frame, self.session)
 
-    def search_btn_clicked(self):
+    def search_button_clicked(self):
         pass
 
     def create_widgets(self):    
@@ -40,8 +42,8 @@ class SearchRecipe:
             self.frame, text="Log_off",bg='#8b5a2b', font=("Georgia", 12), command=self.log_off_button_clicked)
         Profile_button = tkinter.Button(
             self.frame, text = "Profile",bg='#8b5a2b', font=("Georgia", 12), command=self.profile_button_clicked)
-        back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_btn_clicked,  borderwidth=1)
-        search_button = tkinter.Button(self.frame, text="Search", bg='#8b5a2b',font=("Georgia", 12), command=self.search_btn_clicked)
+        back_button = tkinter.Button(self.frame, text="Back", bg='#8b5a2b',font=("Georgia", 12), command=self.back_button_clicked,  borderwidth=1)
+        search_button = tkinter.Button(self.frame, text="Search", bg='#8b5a2b',font=("Georgia", 12), command=self.search_button_clicked)
 
         canvas =tkinter.Canvas(
             self.frame,width=500, height=350, bg="white"

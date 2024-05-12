@@ -5,7 +5,7 @@ from database import Database
 from session import Session
 
 def main():
-    """Starts the application."""  
+    """Start the application."""  
     
     my_db = Database() 
     

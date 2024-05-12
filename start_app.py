@@ -16,24 +16,23 @@ class StartApp:
         
   
     def login_button_clicked(self):
-        """Functionality for log in button"""
+        """Check user exists and log in user."""
         mail = self.email_entry.get()
         pwd = self.password_entry.get()
         user_found = self.session.my_db.login_validation(mail, pwd)
         self.handle_login(user_found)
     
     def handle_login(self, user_found):
-        """Handles the login success. Create user object"""
+        """Create user object, go to welcome_screen."""
         if user_found is None:
             tkinter.messagebox.showerror("Error", "Invalid email or password")
         elif user_found is False:
             tkinter.messagebox.showerror("Database Connection Error.")
         else:
-            tkinter.messagebox.showinfo("Success", "Login successful!")
             self.session.user = User(user_found[0], user_found[1], user_found[2], user_found[3], user_found[4])
+            # Check if user has meal plan, if yes set field
             self.set_meal_plans()
-            helpers.clear_widgets(self.frame)
-            welcome_screen.WelcomeScreen(self.session)  
+            helpers.back_to_welcome_screen(self.frame, self.session)
                        
     def create_button_clicked(self):
         """Clear widgets and switch screen."""
@@ -41,8 +40,8 @@ class StartApp:
         account_creation.AccountCreation(self.session)
     
 
-
     def set_meal_plans(self):
+        '''Check if user has meal plan, if yes, get it.'''
         meal_plan = self.session.my_db.get_meal_plan_id(self.session.user.user_id)
         if meal_plan is not None:
             meal_plan_id = meal_plan[0]
