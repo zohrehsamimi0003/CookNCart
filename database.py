@@ -20,7 +20,7 @@ class Database:
             user = my_cursor.fetchone()
             return user
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in login_validation: {e}")
             return False
         
         
@@ -34,7 +34,7 @@ class Database:
             user = my_cursor.fetchone()
             return user #You can do: if user: blah else: call the insert method
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in check_if_user_exists: {e}")
         
     #INSERTS A USER BEING CREATED INTO THE DATABASE    
     def insert_user(self, username_entry, email_entry, password_entry, diet_type_entry): 
@@ -51,31 +51,19 @@ class Database:
                             VALUES (%s, %s, %s, %s)'''
             parameters = (username_entry, password_entry, email_entry, diet_type_result[0])
             my_cursor.execute(insert_query, parameters)
+            user_id = my_cursor.lastrowid
 
             # Finally, commit the transaction
             self.conn.commit()
             rowcount = my_cursor.rowcount
             my_cursor.close()
-            return rowcount #you get 1 if it inserted it successfully 
+            return user_id
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in insert_user: {e}")
+
+    #def return_last_insert(self):
+
             
-
-    #ZASKIA WE DO NOT HAVE THIS FEATURE FOR USER.    
-    #DELETES AN EXISTING USER
-    def delete_user(self, user):
-        try:
-            my_cursor = self.conn.cursor()
-            query = '''DELETE FROM users WHERE Email = %s;'''
-            my_cursor.execute(query, (user.email,))
-            # Finally, commit the transaction
-            self.conn.commit()
-            rowcount = my_cursor.rowcount
-
-            my_cursor.close()
-            return rowcount
-        except mysql.connector.Error as e: 
-            print(f"Database Error: {e}")
             
     #UPDATES THE INFORMATION OF AN EXISTING USER. PLEASE FIX THE QUERY ACCORDINGLY
     def update_user(self, mail, new_name, new_password, new_diet_type): #pass user object here and the new password from the entry box
@@ -95,7 +83,7 @@ class Database:
             my_cursor.close()
             return rowcount
         except mysql.connector.Error as e: 
-            print(f"Database Error: {e}")
+            print(f"Database Error in update_user: {e}")
             
      #UPDATES THE PASSWORD OF AN EXISTING USER
     def update_password(self, user, new_password): #pass user object here and the new password from the entry box
@@ -109,7 +97,7 @@ class Database:
             my_cursor.close()
             return rowcount
         except mysql.connector.Error as e: 
-            print(f"Database Error: {e}")
+            print(f"Database Error in update_password: {e}")
 
      #UPDATES THE DIET TYPE OF AN EXISTING USER
     def update_diet_type(self, user, new_diet_type): #pass user object here and the new password from the entry box
@@ -128,7 +116,7 @@ class Database:
             my_cursor.close()
             return rowcount
         except mysql.connector.Error as e: 
-            print(f"Database Error: {e}")
+            print(f"Database Error in update_diet_type: {e}")
 
 
 
@@ -140,7 +128,7 @@ class Database:
 
         try:
             my_cursor = self.conn.cursor()
-            query = '''SELECT RecipeId, RecipeTitle, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
+            query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
                     INNER JOIN meal_times
                     ON recipes.MealTimeId = meal_times.MealTimeId
                     INNER JOIN diet_types
@@ -153,7 +141,7 @@ class Database:
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_random_recipes: {e}")
             return False
         
             #SELECTS 1 OR MORE RANDOM RECIPE BASED ON LUNCH TYPE (USED FOR TIME OF DAY RECIPE)
@@ -174,7 +162,7 @@ class Database:
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_random_recipe: {e}")
             return False
         
     def get_diet_types(self):
@@ -184,7 +172,7 @@ class Database:
             my_cursor.execute(query)
             return my_cursor.fetchall()
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_diet_types: {e}")
             return False
 
 
@@ -198,7 +186,7 @@ class Database:
             ingredients = my_cursor.fetchall()
             return ingredients
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_recipe_ingredients: {e}")
             return False      
           
     def get_recipe_details_url(self, recipe_id):
@@ -210,7 +198,7 @@ class Database:
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_recipe_details_url: {e}")
             return False
 
     #INSERTS A USER BEING CREATED INTO THE DATABASE    
@@ -238,7 +226,7 @@ class Database:
                 self.conn.commit()
             my_cursor.close()
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in insert_meal_plan: {e}")
 
     def get_meal_plan_id(self, user_id):
         try:
@@ -250,7 +238,7 @@ class Database:
             random_recipe = my_cursor.fetchone()
             return random_recipe 
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_meal_plan_id: {e}")
             return False
         
     def get_meal_plan_recipe_ids(self, meal_plan_id, meal_time):
@@ -266,7 +254,7 @@ class Database:
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
-            print(f"Database Error: {e}")
+            print(f"Database Error in get_meal_plan_recipe_ids: {e}")
             return False
 
             

@@ -29,7 +29,7 @@ class TimedRecipe:
         helpers.back_to_welcome_screen(self.frame, self.session)
 
     def get_recipe(self):
-        random_recipe = self.my_db.get_random_recipe()[0]
+        random_recipe = self.session.my_db.get_random_recipe()[0]
         self.recipe = Recipe(random_recipe[0], random_recipe[1], random_recipe[2], random_recipe[3])
 
     def recipe_details(self):
@@ -55,26 +55,16 @@ class TimedRecipe:
         recipe_window.mainloop()      
 
     def send_button_clicked(self):
-        shopping_list = self.get_shopping_list()
+        recipe_ingredients = self.session.my_db.get_recipe_ingredients(self.recipe.recipe_id)
+        shopping_list = helpers.create_shop_list(recipe_ingredients)
         helpers.create_shop_list_file(shopping_list, "random_recipe_list.txt")
 
-    def get_shopping_list(self):
-        recipe_ingredients = self.my_db.get_recipe_ingredients(self.recipe.recipe_id)
-        print(recipe_ingredients)
-        for Ingredient, Quantity, Unit in recipe_ingredients:
-            key = (Ingredient, Unit)
-            if key in self.shopping_list:
-                self.shopping_list[key] += Quantity
-            else:
-                self.shopping_list[key] = Quantity
-
-        return self.shopping_list
     
 
 
     def create_widgets(self):    
 
-        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
+        self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA', width=500,height=500)
         Recipe_title_label = tkinter.Label(
             self.frame, text=self.recipe.recipe_title, bg='#AED6F1', font=("Georgia", 12), anchor="w")
         recipe_details= tkinter.Button(
@@ -123,10 +113,10 @@ class TimedRecipe:
         
         
         # Pack the frame
-        self.main_win.logo_label.lift()
+        self.session.main_win.logo_label.lift()
 
     
         # Pack the frame
         self.frame.pack(fill=tkinter.BOTH, expand=True, anchor='n', padx=0, pady=0)
 
-        self.main_win.root.mainloop()
+        self.session.main_win.root.mainloop()

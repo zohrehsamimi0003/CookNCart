@@ -9,13 +9,11 @@ class MealPlanner:
     
     def __init__(self, session):
         self.session = session
-        self.main_win = session.main_win
-        self.my_db = session.my_db
         self.create_widgets()
 
 
     def create_widgets(self):
-        self.frame = tkinter.Frame(self.main_win.root, bg='#F9EBEA')
+        self.frame = tkinter.Frame(self.session.main_win.root, bg='#F9EBEA')
 
 
 
@@ -47,27 +45,12 @@ class MealPlanner:
     
     def send(self): 
         self.save_meal_plan()
+        recipe_ingredients = []
+        for recipe_id in self.table.recipe_ids:
+            recipe_ingredients += self.session.my_db.get_recipe_ingredients(recipe_id)
 
-
-        #SENDS SHOPPING LIST
-        shopping_list = self.get_shopping_list()
-        
-        # Open the file in write mode
-        with open('shopping_list.txt', 'w') as file:
-            # Write the title with increased font size
-            file.write("Shopping List\n\n")
-            
-            # Write the header row
-            file.write("Quantity".ljust(10) + "Ingredient\n\n")
-            
-            # Write each ingredient data
-            for (ingredient, unit), quantity in shopping_list.items():
-                amount = f"{quantity}{unit}"
-                if unit is None:
-                    unit = ""
-                    file.write(f"{quantity:<10}{ingredient}\n")
-                else:
-                    file.write(f"{amount:<10}{ingredient}\n")
+        shopping_list = helpers.create_shop_list(recipe_ingredients)
+        helpers.create_shop_list_file(shopping_list, 'shopping_list.txt')
 
     def save_meal_plan(self):
         self.session.user.meal_plan.breakfast_recipes = self.table.breakfast_recipes
@@ -76,23 +59,7 @@ class MealPlanner:
 
         #recipes = self.table.breakfast_recipes + self.table.lunch_recipes + self.table.dinner_recipes
 
-        self.my_db.insert_meal_plan(self.session.user.user_id, self.table.recipe_ids)
-
-
-    
-
-    def get_shopping_list(self):
-        shopping_list = {} 
-        for recipe_id in self.table.recipe_ids:
-            recipe_ingredients = self.my_db.get_recipe_ingredients(recipe_id)
-            for Ingredient, Quantity, Unit in recipe_ingredients:
-                key = (Ingredient, Unit)
-                if key in shopping_list:
-                    shopping_list[key] += Quantity
-                else:
-                    shopping_list[key] = Quantity
-
-        return shopping_list
+        self.session.my_db.insert_meal_plan(self.session.user.user_id, self.table.recipe_ids)
     
     def back_button_clicked(self):
         helpers.back_to_welcome_screen(self.frame, self.session)

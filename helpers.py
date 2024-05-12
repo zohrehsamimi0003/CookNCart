@@ -32,8 +32,18 @@ def back_to_welcome_screen(frame, session):
     clear_widgets(frame)
     welcome_screen.WelcomeScreen(session)
 
+def create_shop_list(recipe_ingredients):
+    shopping_list = {} 
+    for Ingredient, Quantity, Unit in recipe_ingredients:
+        key = (Ingredient, Unit)
+        if key in shopping_list:
+            shopping_list[key] += Quantity
+        else:
+            shopping_list[key] = Quantity
 
-def create_shop_list_file(shopping_list, file_name): #ZASKIA HANDLE THIS
+    return shopping_list
+
+def create_shop_list_file(shopping_list, file_name): 
     
     # Open the file in write mode
     with open(file_name, 'w') as file:

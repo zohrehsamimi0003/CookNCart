@@ -8,34 +8,31 @@ class DisplayProfile:
     
     def __init__(self, session):
         self.session = session
-        self.main_win = session.main_win
-        self.user = session.user
-        self.my_db = session.my_db
         self.create_widgets()
     
     def create_widgets(self):    
-        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA')
+        self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA')
 
         cook_n_cart = tkinter.Button(
             self.frame, text="CookNCart",bg='#D2B4DE', font=("Comic Sans MS", 25),borderwidth=1,relief='solid',anchor=tkinter.CENTER, command = self.back_btn_clicked )
         name_label = tkinter.Label(
             self.frame, text="Name", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
-        self.name_var = tkinter.StringVar(value=self.user.name)
+        self.name_var = tkinter.StringVar(value=self.session.user.name)
         self.name_entry = tkinter.Entry(self.frame,bg='#D2B4DE' ,font=("Georgia", 12), textvariable=self.name_var)
 
         email = tkinter.Label(
             self.frame, text="Email_ID", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
-        email_var = tkinter.StringVar(value=self.user.email)
+        email_var = tkinter.StringVar(value=self.session.user.email)
         self.email_entry = tkinter.Entry(
             self.frame,bg='#D2B4DE' , font=("Georgia", 12), textvariable=email_var, state="readonly")
         password_label = tkinter.Label(
             self.frame, text="Password", bg='#AED6F1', font=("Georgia", 12), width=20, anchor="w")
-        self.password_var = tkinter.StringVar(value=self.user.password)
+        self.password_var = tkinter.StringVar(value=self.session.user.password)
         self.password_entry= tkinter.Entry(
             self.frame,bg='#D2B4DE' , font=("Georgia", 12),textvariable=self.password_var)
         meal_preference = tkinter.Label(    
             self.frame, text="Meal Preference", bg='#AED6F1', font=("Georgia", 12),  width=20, anchor="w")
-        self.meal_pre_var = tkinter.StringVar(value=self.user.diet_type)
+        self.meal_pre_var = tkinter.StringVar(value=self.session.user.diet_type)
         self.meal_preference_entry= tkinter.Entry(
             self.frame,bg='#D2B4DE' , font=("Georgia", 12), textvariable = self.meal_pre_var)
         update_account_button = tkinter.Button(
@@ -65,9 +62,9 @@ class DisplayProfile:
         new_diet_type = self.meal_pre_var.get()
 
         # Update database and user object with new values. 
-        rowcount = self.my_db.update_user(self.user.email, new_name, new_password, new_diet_type)
+        rowcount = self.session.my_db.update_user(self.session.user.email, new_name, new_password, new_diet_type)
         if rowcount == 1:
-            self.user.update_user_data(new_name, new_password, new_diet_type)
+            self.session.user.update_user_data(new_name, new_password, new_diet_type)
             tkinter.messagebox.showinfo("Update", "Data updated successfully!")
             #helpers.cook_n_cart_clicked(self.session)
         else:

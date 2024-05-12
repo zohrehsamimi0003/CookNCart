@@ -9,13 +9,11 @@ class AccountCreation:
 
     def __init__(self, session):
         self.session = session
-        self.main_win = session.main_win
-        self.my_db = session.my_db
         self.create_widgets()
     
     def create_widgets(self):    
 
-        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
+        self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA', width=500,height=500)
         cook_n_cart = tkinter.Button(
             self.frame, text="CookNCart", command= self.back_btn_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
         name_label = tkinter.Label(
@@ -33,7 +31,7 @@ class AccountCreation:
         
         #CHNGED MEAL_PREFERENCE TO DIET_TYPE TO MATCH DATABASE
         #CHANGED THE ENTRY BOX TO A DROPBOX EDIT AS YOU WISH BUT LEAVE THE NAMES AS IS
-        diet_types = self.my_db.get_diet_types()
+        diet_types = self.session.my_db.get_diet_types()
         self.selected_diet_type = tkinter.StringVar(self.frame)
         self.selected_diet_type.set(diet_types[0])
         diet_type = tkinter.Label(
@@ -70,7 +68,7 @@ class AccountCreation:
     def create_button_clicked(self):
         """Check for duplicate user based on email."""
         mail = self.email_entry.get()
-        found_user = self.my_db.check_if_user_exists(mail) #duplicacy check based on email. currently we are doing
+        found_user = self.session.my_db.check_if_user_exists(mail) #duplicacy check based on email. currently we are doing
         self.handle_user_creation(found_user, mail)
         
     def handle_user_creation(self, found_user, mail):
@@ -80,10 +78,10 @@ class AccountCreation:
             name = self.name_entry.get()
             pwd = self.password_entry.get()
             meal = self.selected_diet_type.get().strip("(),'")
-            rowcount = self.my_db.insert_user(name, mail, pwd, meal)
-            if rowcount == 1:
+            user_id = self.session.my_db.insert_user(name, mail, pwd, meal)
+            if user_id is not None:
                 tkinter.messagebox.showinfo("Account Created", "Account Successfully Created.")
-                self.session.user = User(name, pwd, mail, meal)
+                self.session.user = User(user_id, name, pwd, mail, meal)
                 helpers.clear_widgets(self.frame)
                 welcome_screen.WelcomeScreen(self.session)    
             else:

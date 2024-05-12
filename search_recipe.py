@@ -12,8 +12,6 @@ class SearchRecipe:
 
     def __init__(self, session):
         self.session = session
-        self.main_win = session.main_win
-        self.my_db = session.my_db
         self.create_widgets()
     
     def profile_button_clicked(self):
@@ -31,7 +29,7 @@ class SearchRecipe:
 
     def create_widgets(self):    
 
-        self.frame = tkinter.Frame(self.main_win.root,bg='#F9EBEA', width=500,height=500)
+        self.frame = tkinter.Frame(self.session.main_win.root,bg='#F9EBEA', width=500,height=500)
         ingredients = tkinter.Label(
             self.frame, text="  Ingredients :", bg='#AED6F1', font=("Georgia", 12), anchor="w")
         ingredients_entry= tkinter.Entry(
@@ -66,10 +64,10 @@ class SearchRecipe:
         
         
         # Pack the frame
-        self.main_win.logo_label.lift()
+        self.session.main_win.logo_label.lift()
 
     
         # Pack the frame
         self.frame.pack(fill=tkinter.BOTH, expand=True, anchor='n', padx=0, pady=0)
 
-        self.main_win.root.mainloop()
+        self.session.main_win.root.mainloop()
