@@ -18,7 +18,7 @@ class MealPlanner:
             self.frame, text="CookNCart", command= self.new_meal_planner_btn_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')
         Log_off = tkinter.Button( self.frame, text="Log_off",bg='#F5B7B1', font=("Georgia", 11), command = self.log_off_btn_clicked)
         Profile = tkinter.Button( self.frame, text="Profile",bg='#F5B7B1', font=("Georgia", 11), command= self.profile_btn_clicked)
-        Send=tkinter.Button(self.frame, text="Send",bg='#F5B7B1', font=("Georgia", 11), command=self.send_btn_clicked)
+        Send=tkinter.Button(self.frame, text="Save plan & create shopping list",bg='#F5B7B1', font=("Georgia", 11), command=self.send_btn_clicked)
         self.table = Table( self.session, self.frame, is_new_meal_plan=False)
 
         CookNCart.grid(row=0, column=0, columnspan=3, sticky="nw",padx=20, pady=20) 

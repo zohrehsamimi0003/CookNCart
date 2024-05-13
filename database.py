@@ -96,7 +96,7 @@ class Database:
                 WHERE meal_times.MealTime = %s'''  
         
         if diet_type != "no preference":
-            query += "AND recipes.DietType = %s"
+            query += "AND diet_types.DietType = %s"
             parameters.append(diet_type)
         
         query += '''ORDER BY RAND()
