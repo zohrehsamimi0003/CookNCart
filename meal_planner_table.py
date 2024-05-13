@@ -64,9 +64,10 @@ class Table(tk.Frame):
 
         # If user has no meal plan saved in database or clicked on a new plan
         if len(self.session.user.meal_plan.breakfast_recipes) == 0 or self.is_new_meal_plan == True:
-            self.breakfast_recipes = self.session.my_db.get_random_recipes("Breakfast", 7)
-            self.lunch_recipes = self.session.my_db.get_random_recipes("Lunch", 7)
-            self.dinner_recipes = self.session.my_db.get_random_recipes("Dinner", 7)
+            print(self.session.user.diet_type)
+            self.breakfast_recipes = self.session.my_db.get_random_recipes("Breakfast", self.session.user.diet_type, 7)
+            self.lunch_recipes = self.session.my_db.get_random_recipes("Lunch", self.session.user.diet_type, 7)
+            self.dinner_recipes = self.session.my_db.get_random_recipes("Dinner", self.session.user.diet_type, 7)
 
         # If user has a meal plan saved in database
         elif self.is_new_meal_plan == False or len(self.session.user.meal_plan.breakfast_recipes) != 0:

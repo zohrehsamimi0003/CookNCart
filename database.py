@@ -85,20 +85,28 @@ class Database:
             print(f"Database Error in update_user: {e}")
 
 
-    def get_random_recipes(self, meal_time, number_of_recipes):
+    def get_random_recipes(self, meal_time, diet_type, number_of_recipes):
         '''Select 1 or more random recipes based on lunch type.'''
+        parameters = [meal_time]
+        query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
+                INNER JOIN meal_times
+                ON recipes.MealTimeId = meal_times.MealTimeId
+                INNER JOIN diet_types
+                ON recipes.DietType = diet_types.DietTypeId
+                WHERE meal_times.MealTime = %s'''  
+        
+        if diet_type != "no preference":
+            query += "AND recipes.DietType = %s"
+            parameters.append(diet_type)
+        
+        query += '''ORDER BY RAND()
+                 LIMIT %s;'''
+        parameters.append(number_of_recipes)
+        
         try:
-            my_cursor = self.conn.cursor()
-            query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
-                    INNER JOIN meal_times
-                    ON recipes.MealTimeId = meal_times.MealTimeId
-                    INNER JOIN diet_types
-                    ON recipes.DietType = diet_types.DietTypeId
-                    WHERE meal_times.MealTime = %s
-                    ORDER BY RAND()
-                    LIMIT %s;'''            
+            my_cursor = self.conn.cursor()         
             
-            my_cursor.execute(query, (meal_time, number_of_recipes))
+            my_cursor.execute(query, parameters)
             random_recipe = my_cursor.fetchall()
             return random_recipe 
         except mysql.connector.Error as e:
@@ -106,17 +114,20 @@ class Database:
             return False
         
 
-    def get_random_recipe(self):
+    def get_random_recipe(self, diet_type):
         ''' Select a random recipe.'''
+        parameter = []
+        query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, diet_types.DietType FROM recipes '''
+        if diet_type != "no preference":            
+            query += ''' INNER JOIN diet_types
+            ON recipes.DietType = diet_types.DietTypeId 
+            WHERE diet_types.DietType = %s '''
+            parameter.append(diet_type)
+        query += ''' ORDER BY RAND()
+                    LIMIT 1;'''       
         try:
-            my_cursor = self.conn.cursor()
-            query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL FROM recipes
-                    INNER JOIN diet_types
-                    ON recipes.DietType = diet_types.DietTypeId
-                    ORDER BY RAND()
-                    LIMIT 1;'''            
-            
-            my_cursor.execute(query)
+            my_cursor = self.conn.cursor()           
+            my_cursor.execute(query, parameter)
             random_recipe = my_cursor.fetchall() #might change this if I have time, should be fetchone()
             return random_recipe 
         except mysql.connector.Error as e:

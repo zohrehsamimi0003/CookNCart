@@ -33,7 +33,7 @@ class RandomRecipe:
 
     def get_recipe(self):
         '''Get and set random recipe details.'''
-        random_recipe = self.session.my_db.get_random_recipe()[0]
+        random_recipe = self.session.my_db.get_random_recipe(self.session.user.diet_type)[0]
         self.recipe = Recipe(random_recipe[0], random_recipe[1], random_recipe[2], random_recipe[3])
 
     def recipe_details(self):
