@@ -56,8 +56,6 @@ class StartApp:
         self.frame.pack(side='top')
         
         # Create widgets
-        login_label = tkinter.Label(
-            self.frame, text="CookNCart", bg='#D2B4DE', font=("Comic Sans MS", 25))
         email_label = tkinter.Label(
             self.frame, text="E-Mail ID", bg='#AED6F1', font=("Georgia", 12))
         self.email_entry = tkinter.Entry(
@@ -74,10 +72,9 @@ class StartApp:
             command=self.create_button_clicked)
 
         # Place widgets on screen
-        login_label.grid(row=0, column=0, columnspan=3, sticky="news", pady=40) 
-        email_label.grid(row=1, column=0)
-        self.email_entry.grid(row=1, column=2, pady=20)
-        password_label.grid(row=2, column=0)  
-        self.password_entry.grid(row=2, column=2, pady=20)  
-        login_button.grid(row=4, column=0, columnspan=2, pady=30)
-        create_account_button.grid(row=4, column=1, columnspan=2, pady=30)
+        email_label.grid(row=1, column=0,padx=10,pady =  (200,20),ipadx=10,ipady=10)
+        self.email_entry.grid(row=1, column=2, pady=(200,20),ipadx=10,ipady=10)
+        password_label.grid(row=2, column=0,padx=10,ipadx=10,ipady=10)  
+        self.password_entry.grid(row=2, column=2, pady=20,ipadx=10,ipady=10)  
+        login_button.grid(row=4, column=0, columnspan=2, pady=30,ipadx=10,ipady=10)
+        create_account_button.grid(row=0, column=3, columnspan=2, pady=30,ipadx=10,ipady=10)
