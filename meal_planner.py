@@ -12,7 +12,7 @@ class MealPlanner:
         self.create_widgets()
 
     def create_widgets(self):
-        self.frame = tkinter.Frame(self.session.main_win.root, bg='#F9EBEA')
+        self.frame = tkinter.Frame(self.session.main_win.root, bg=self.session.main_win.bg)
 
         CookNCart = tkinter.Button(
             self.frame, text="CookNCart", command= self.new_meal_planner_btn_clicked, bg='#D2B4DE', font=("Comic Sans MS", 25) ,borderwidth=1,relief='solid')

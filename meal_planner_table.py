@@ -24,7 +24,7 @@ class Table(tk.Frame):
         # Column headings
         headings = ["", "Breakfast", "Lunch", "Dinner"]
         for j, heading in enumerate(headings):
-            label = tk.Label(self, text=heading, borderwidth=1, relief="solid",font=("Comic Sans MS", 18))
+            label = tk.Label(self, text=heading, borderwidth=0, background= self.session.main_win.bg, relief="solid",font=("Comic Sans MS", 18))
             label.grid(row=0, column=j, sticky="nsew",ipadx=10,ipady=10)
 
         # Row headings and empty cells
@@ -34,19 +34,19 @@ class Table(tk.Frame):
             row = []
             for j in range(columns):
                 if j == 0:
-                    label = tk.Label(self, text=heading, relief="solid",font=("Comic Sans MS", 18))
+                    label = tk.Label(self, text=heading, background= self.session.main_win.bg, borderwidth= 0, relief="solid",font=("Comic Sans MS", 18))
                 elif j== 1:
                     self.recipe_id = self.breakfast_recipes[i][0]
                     details_url = self.breakfast_recipes[i][3]
-                    label = tk.Button(self, text=self.breakfast_recipes[i][1], command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid", font=("Georgia", 12))
+                    label = tk.Button(self, text=self.breakfast_recipes[i][1], background= self.session.main_win.bg, borderwidth= 0, command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid", font=("Georgia", 12))
                 elif j == 2:
                     self.recipe_id = self.lunch_recipes[i][0]
                     details_url = self.lunch_recipes[i][3]
-                    label = tk.Button(self, text=self.lunch_recipes[i][1], command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
+                    label = tk.Button(self, text=self.lunch_recipes[i][1], background= self.session.main_win.bg, borderwidth= 0, command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
                 elif j == 3:
                     self.recipe_id = self.dinner_recipes[i][0]
                     details_url = self.dinner_recipes[i][3]
-                    label = tk.Button(self, text=self.dinner_recipes[i][1], command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
+                    label = tk.Button(self, text=self.dinner_recipes[i][1], background= self.session.main_win.bg, borderwidth= 0, command=lambda url=details_url: self.recipe_btn_clicked(url), relief="solid",font= ("Georgia",12))
                 else:
                     label = tk.Label(self, text="some recipe", relief="solid",font= ("Georgia",12))
                 label.grid(row=i+1, column=j, sticky="nsew",ipadx=10,ipady=10)

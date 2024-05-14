@@ -6,7 +6,7 @@ class MainWindow():
 
     def __init__(self, root):
         self.root = root
-        self.bg = '#F9EBEA'
+        self.bg = '#FFFFFF'
         root.title("CookNCart")
         root.geometry('1000x1000')
         root.configure(bg=self.bg)

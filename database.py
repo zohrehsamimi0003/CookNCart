@@ -88,11 +88,11 @@ class Database:
     def get_random_recipes(self, meal_time, diet_type, number_of_recipes):
         '''Select 1 or more random recipes based on lunch type.'''
         parameters = [meal_time]
-        query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, MealTime, diet_types.DietType, Portions FROM recipes
+        query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, MealTime, diet_types.DietType FROM recipes
                 INNER JOIN meal_times
                 ON recipes.MealTimeId = meal_times.MealTimeId
                 INNER JOIN diet_types
-                ON recipes.DietType = diet_types.DietTypeId
+                ON recipes.DietTypeId = diet_types.DietTypeId
                 WHERE meal_times.MealTime = %s'''  
         
         if diet_type != "no preference":
@@ -120,7 +120,7 @@ class Database:
         query = '''SELECT RecipeId, RecipeTitle, ImageURL, DetailsURL, diet_types.DietType FROM recipes '''
         if diet_type != "no preference":            
             query += ''' INNER JOIN diet_types
-            ON recipes.DietType = diet_types.DietTypeId 
+            ON recipes.DietTypeId = diet_types.DietTypeId 
             WHERE diet_types.DietType = %s '''
             parameter.append(diet_type)
         query += ''' ORDER BY RAND()
